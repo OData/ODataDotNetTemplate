@@ -9,13 +9,13 @@
 
   <!-- For NuGet Package Dependencies -->
   <PropertyGroup>
-    <DefaultNetCoreTargetFramework>net8.0</DefaultNetCoreTargetFramework>
+    <DefaultNetCoreTargetFramework>net6.0</DefaultNetCoreTargetFramework>
 
     <!-- Swagger/OpenAPI Versions -->
-    <SwashbuckleAspNetCore>7.2.0</SwashbuckleAspNetCore>
+    <SwashbuckleAspNetCore>6.7.3</SwashbuckleAspNetCore>
 
     <!-- Microsoft.AspNetCore.OData Versions -->
-    <MicrosoftAspNetCoreODataVersion>9.1.3</MicrosoftAspNetCoreODataVersion>
+    <MicrosoftAspNetCoreODataVersion>8.2.7</MicrosoftAspNetCoreODataVersion>
 </PropertyGroup>
 
   <!--

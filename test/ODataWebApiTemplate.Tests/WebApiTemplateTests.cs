@@ -36,7 +36,7 @@ public class WebApiTemplateTests : IClassFixture<ProjectFactoryFixture>
         }
     }
 
-    private const string Framework = "net8.0";
+    private const string Framework = "net6.0";
 
     #region Tests generating an ASP.NET Core OData Web API project with default options and verifies its functionality.
 
