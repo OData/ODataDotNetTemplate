@@ -1,0 +1,49 @@
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<!--
+    This MSBuild task generates a file from a template by replacing placeholders with specified properties.
+
+    Task: GenerateFileFromTemplate
+    TaskFactory: RoslynCodeTaskFactory
+    AssemblyFile: $(MSBuildToolsPath)\Microsoft.Build.Tasks.dll
+
+    Parameters:
+        - TemplateFile (System.String, Required): The path to the template file.
+        - OutputPath (System.String, Required): The path where the generated file will be saved.
+        - Properties (System.String[], Required): An array of properties to replace in the template.
+        - ResolvedOutputPath (System.String, Output): The resolved full path of the output file.
+
+    References:
+        - System.Collections.Generic
+        - System.IO
+        - System.Text
+        - Microsoft.Build.Framework
+        - Microsoft.Build.Utilities
+
+    Code:
+        - The Execute method reads the template file, replaces placeholders with property values, and writes the result to the output path.
+        - The Replace method performs the placeholder substitution in the template content.
+
+    Example Usage:
+        <GenerateFileFromTemplate TemplateFile="path/to/template" OutputPath="path/to/output" Properties="@(Properties)" />
+-->
+  <UsingTask
+        TaskName="GenerateFileFromTemplate"
+        TaskFactory="RoslynCodeTaskFactory"
+        AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+        <ParameterGroup>
+            <TemplateFile ParameterType="System.String" Required="true" />
+            <OutputPath ParameterType="System.String" Required="true" />
+            <Properties ParameterType="System.String[]" Required="true" />
+            <ResolvedOutputPath ParameterType="System.String" Output="true" />
+        </ParameterGroup>
+        <Task>
+            <Using Namespace="System.Collections.Generic" />
+            <Using Namespace="System.IO" />
+            <Using Namespace="System.Text" />
+            <Using Namespace="Microsoft.Build.Framework" />
+            <Using Namespace="Microsoft.Build.Utilities" />
+
+            <Code Type="Method" Language="cs" Source="$(ToolsPath)GenerateFileFromTemplate.cs" />
+        </Task>
+    </UsingTask>
+</Project>

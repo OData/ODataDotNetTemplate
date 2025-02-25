@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35507.96
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ODataWebApiTemplate", "..\src\ProjectTemplate\ODataWebApiTemplate.csproj", "{0D2F76C2-C7C6-9DE3-8807-BA93BBF95D8F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProjectTemplate", "ProjectTemplate", "{A9513669-36F2-4E2C-B5AB-7AD9D93536C5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{29CABF1A-7DCB-48CA-B310-A5A630D053C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ODataWebApiTemplate.Tests", "..\test\ODataWebApiTemplate.Tests\ODataWebApiTemplate.Tests.csproj", "{3779DB99-D0AE-4381-9A48-3EBB823D801B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0D2F76C2-C7C6-9DE3-8807-BA93BBF95D8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D2F76C2-C7C6-9DE3-8807-BA93BBF95D8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D2F76C2-C7C6-9DE3-8807-BA93BBF95D8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D2F76C2-C7C6-9DE3-8807-BA93BBF95D8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3779DB99-D0AE-4381-9A48-3EBB823D801B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3779DB99-D0AE-4381-9A48-3EBB823D801B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3779DB99-D0AE-4381-9A48-3EBB823D801B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3779DB99-D0AE-4381-9A48-3EBB823D801B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0D2F76C2-C7C6-9DE3-8807-BA93BBF95D8F} = {A9513669-36F2-4E2C-B5AB-7AD9D93536C5}
+		{A9513669-36F2-4E2C-B5AB-7AD9D93536C5} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{3779DB99-D0AE-4381-9A48-3EBB823D801B} = {29CABF1A-7DCB-48CA-B310-A5A630D053C9}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3EE47F29-54DA-49FF-9F13-771D0CA3DE51}
+	EndGlobalSection
+EndGlobal

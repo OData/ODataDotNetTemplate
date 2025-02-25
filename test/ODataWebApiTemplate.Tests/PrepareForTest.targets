@@ -1,0 +1,75 @@
+<Project>
+  <PropertyGroup>
+    <TestPackageRestorePath>$([MSBuild]::NormalizeDirectory('$(RootPath)', '.packages', '$(RestoreFolderName)'))</TestPackageRestorePath>
+	  <PreserveExistingLogsInOutput Condition="'$(PreserveExistingLogsInOutput)' == ''">false</PreserveExistingLogsInOutput>
+	  <LoggingTestingFileLoggingDirectory Condition=" '$(LoggingTestingFileLoggingDirectory)' == ''">$(ArtifactsPath)log\</LoggingTestingFileLoggingDirectory>
+	  <LoggingTestingDisableFileLogging>false</LoggingTestingDisableFileLogging>
+
+    <TestsRootPath>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), PrepareForTest.targets))/bin/$(Platform)/$(Configuration)/</TestsRootPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+	<AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+		<_Parameter1>ArtifactsShippingPackagesDir</_Parameter1>
+		<_Parameter2>$(ArtifactsShippingPackagesDir)</_Parameter2>
+	</AssemblyAttribute>
+    <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+      <_Parameter1>TestPackageRestorePath</_Parameter1>
+      <_Parameter2>$(TestPackageRestorePath)</_Parameter2>
+    </AssemblyAttribute>
+    <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+      <_Parameter1>Test.DefaultTargetFramework</_Parameter1>
+      <_Parameter2>$(DefaultNetCoreTargetFramework)</_Parameter2>
+    </AssemblyAttribute>
+    <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute" Condition="'$(ContinuousIntegrationBuild)' == 'true'">
+      <_Parameter1>ContinuousIntegrationBuild</_Parameter1>
+      <_Parameter2>true</_Parameter2>
+    </AssemblyAttribute>
+  </ItemGroup>
+
+  <Target Name="PrepareForTest" BeforeTargets="GetAssemblyAttributes">
+    <PropertyGroup>
+      <TestTemplateCreationFolder>$([MSBuild]::NormalizePath('$(TestsRootPath)$(TestTemplateCreationFolder)'))</TestTemplateCreationFolder>
+	    <CustomTemplateHivePath>$(TestTemplateCreationFolder)\$([System.Guid]::NewGuid())\.templateengine</CustomTemplateHivePath>
+    </PropertyGroup>
+
+    <ItemGroup>
+
+      <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+        <_Parameter1>TestTemplateCreationFolder</_Parameter1>
+        <_Parameter2>$(TestTemplateCreationFolder)</_Parameter2>
+      </AssemblyAttribute>
+      <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+        <_Parameter1>CustomTemplateHivePath</_Parameter1>
+        <_Parameter2>$(CustomTemplateHivePath)</_Parameter2>
+      </AssemblyAttribute>
+	  <AssemblyAttribute Include="ODataWebApiTemplate.Tests.Attributes.TestFrameworkFileLoggerAttribute">
+		<_Parameter1>$(PreserveExistingLogsInOutput)</_Parameter1>
+		<_Parameter2>$(DefaultNetCoreTargetFramework)</_Parameter2>
+		<_Parameter3 Condition="'$(LoggingTestingDisableFileLogging)' != 'true'">$(LoggingTestingFileLoggingDirectory)</_Parameter3>
+	  </AssemblyAttribute>
+    </ItemGroup>
+
+    <Message Importance="high" Text="Preparing environment for tests" />
+    <!-- Remove the template creation folders and the package-restore folders to ensure that when we run the tests we don't
+         get cached results and changes show up.
+    -->
+
+    <ItemGroup>
+      <_ExistingFilesFromLastRun Include="$(TestTemplateCreationFolder)**\*" />
+    </ItemGroup>
+
+    <Delete Files="@(_ExistingFilesFromLastRun)" ContinueOnError="true" />
+
+    <RemoveDir Directories="$(TestTemplateCreationFolder)" Condition="Exists('$(TestTemplateCreationFolder)')" ContinueOnError="true">
+      <Output TaskParameter="RemovedDirectories" ItemName="_CleanedUpDirectories" />
+    </RemoveDir>
+    <RemoveDir Directories="$(TestPackageRestorePath)" Condition="Exists('$(TestPackageRestorePath)')" ContinueOnError="true">
+      <Output TaskParameter="RemovedDirectories" ItemName="_CleanedUpDirectories" />
+    </RemoveDir>
+
+    <Message Importance="high" Text="Removed directory %(_CleanedUpDirectories.Identity)" />
+
+    <Message Importance="high" Text="Created directory %(_CreatedDirectories.Identity)" />
+  </Target>
+</Project>

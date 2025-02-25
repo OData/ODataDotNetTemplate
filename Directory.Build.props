@@ -1,0 +1,45 @@
+<Project>
+
+  <PropertyGroup>
+    <!-- Enlist root path with the last '\' -->
+    <RootPath Condition=" '$(RootPath)'=='' ">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), Build.root))</RootPath>
+
+    <!-- tools path with end '\' -->
+    <ToolsPath Condition=" '$(ToolsPath)'=='' ">$(RootPath)\tools\</ToolsPath>
+
+	  <!-- tools path with end '\' -->
+	  <ArtifactsPath Condition=" '$(ArtifactsPath)'=='' ">$(RootPath)\artifacts\</ArtifactsPath>
+  </PropertyGroup>
+
+  <Import Project="$(ToolsPath)Directory.Build.targets" />
+
+  <PropertyGroup>
+    <PackageVersionForPackageVersionInfo>$(PackageVersion)</PackageVersionForPackageVersionInfo>
+    <AspNetCoreMajorMinorVersion>$(DefaultNetCoreTargetFramework.Substring(3))</AspNetCoreMajorMinorVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+
+    <!-- package, obj and bin folder -->
+    <ArtifactsShippingPackagesDir Condition=" '$(ArtifactsShippingPackagesDir)'=='' ">$(ArtifactsPath)package\$(Configuration)\</ArtifactsShippingPackagesDir>
+
+    <!-- Output and intermediate output root dir -->
+    <IntermediateOutputPath Condition=" '$(IntermediateOutputPath)'=='' ">$(ArtifactsPath)obj\$(Platform)\$(Configuration)\$(MSBuildProjectFile)\</IntermediateOutputPath>
+    <OutputPath Condition="'$(OutputPath)' == ''">$(ArtifactsPath)bin\$(Platform)\$(Configuration)\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <NoWarn>$(NoWarn);1701;1702;1307</NoWarn>
+    <DefineConstants>$(DefineConstants);TRACE;DEBUG</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>portable</DebugType>
+    <Optimize>true</Optimize>
+    <DefineConstants>$(DefineConstants);TRACE</DefineConstants>
+  </PropertyGroup>
+</Project>

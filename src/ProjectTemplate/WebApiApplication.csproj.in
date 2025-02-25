@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+	<PropertyGroup>
+		<TargetFramework>${DefaultNetCoreTargetFramework}</TargetFramework>
+		<Nullable>enable</Nullable>
+		<NoDefaultLaunchSettingsFile Condition="'$(ExcludeLaunchSettings)' == 'True'">True</NoDefaultLaunchSettingsFile>
+	</PropertyGroup>
+
+  <ItemGroup>
+	<PackageReference Include="Microsoft.AspNetCore.OData" Version="${MicrosoftAspNetCoreODataVersion}" />
+	<!--#if (EnableOpenAPI)-->
+	<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="${MicrosoftAspNetCoreOpenApiVersion}" Condition="'$(EnableOpenAPI)' == 'True'" />
+	<!--#endif-->
+  </ItemGroup>
+
+</Project>

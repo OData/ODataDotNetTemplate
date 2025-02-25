@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+
+    <!-- Properties that affect test runs -->
+    <!-- TestTemplateCreationFolder is the folder where the templates will be created. Will point out to $(OutputDir)$(TestTemplateCreationFolder) -->
+    <TestTemplateCreationFolder>TestTemplates\</TestTemplateCreationFolder>
+    <RestoreFolderName>AspNetCoreODataWebApi</RestoreFolderName>
+    <TestDependsOnAspNetPackages>true</TestDependsOnAspNetPackages>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="ODataWebApiTemplate.Tests.content.g.cache" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.4" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
+    <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
+    <PackageReference Include="xunit" Version="2.5.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3" />
+  </ItemGroup>
+
+  <Import Project="PrepareForTest.targets" />
+	
+  <ItemGroup>
+	  <Using Include="Xunit" />
+  </ItemGroup>
+
+</Project>

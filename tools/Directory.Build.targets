@@ -1,0 +1,9 @@
+<Project>
+  <Import Project="Versions.Settings.targets" />
+  <Import Project="GenerateContent.targets" />
+
+  <PropertyGroup>
+    <AssemblyCompany>Microsoft Corporation.</AssemblyCompany>
+    <AssemblyCopyright>© Microsoft Corporation. All rights reserved.</AssemblyCopyright>
+  </PropertyGroup>
+</Project>

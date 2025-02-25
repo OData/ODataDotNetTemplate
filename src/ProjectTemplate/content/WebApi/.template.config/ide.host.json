@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json.schemastore.org/ide.host",
+  "icon": "ide/icon.png",
+  "symbolInfo": [
+    {
+      "id": "ODataQueryOptions",
+      "name": { "text": "OData System Query Options." },
+      "isVisible": true
+    },
+    {
+      "id": "EnableOpenAPI",
+      "name": {
+        "text": "Enable _OpenAPI support",
+        "overrideDefaultText": true
+      },
+      "description": {
+        "text": "Enables OpenAPI (Swagger) support",
+        "overrideDefaultText": true
+      },
+      "isVisible": true,
+      "defaultValue": "true",
+      "persistenceScope": "templateGroup"
+    },
+    {
+      "id": "UseProgramMain",
+      "isVisible": true,
+      "persistenceScope": "shared",
+      "persistenceScopeName": "Microsoft"
+    },
+    {
+      "id": "ConfigureHttps",
+      "name": { "text": "Configure HTTPS" },
+      "isVisible": true,
+      "defaultValue": "true"
+    },
+    {
+      "id": "EnableNoDollarQueryOptions",
+      "name": { "text": "Whether or not to prefix OData system query options with '$'" },
+      "isVisible": true,
+      "defaultValue": "true"
+    },
+    {
+      "id": "EnableCaseInsensitive",
+      "name": { "text": "Enable case insensitive for the controller/action/property name" },
+      "isVisible": true,
+      "defaultValue": "true"
+    },
+    {
+      "id": "EnableDefaultODataBatch",
+      "name": { "text": "Allowing OData batching" },
+      "isVisible": true,
+      "defaultValue": "false"
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>Microsoft.AspNetCoreOData.WebApiTemplate.$(AspNetCoreMajorMinorVersion)</PackageId>
+    <PackageVersion>$(PackageVersion)</PackageVersion>
+    <Title>$(PackageTitle)</Title>
+    <Authors>$(PackageAuthors)</Authors>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Description>OData ASP.NET Core Web Template Pack for Microsoft Template Engine
+
+To install the templates in this package, run 'dotnet new --install $(PackageId)::$(PackageVersion)'.</Description>
+    <PackageTags>aspnet;templates;web;webapi;api;service;odata;aspnet</PackageTags>
+    <PackageProjectUrl>https://github.com/OData/ODataDotNetTemplate</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/OData/ODataDotNetTemplate</RepositoryUrl>
+    <PackageIcon>icon.png</PackageIcon>
+
+    <!-- Keep package type as 'Template' to show the package as a template package on nuget.org and make your template available in dotnet new search.-->
+    <PackageType>Template</PackageType>
+    <TargetFramework>$(DefaultNetCoreTargetFramework)</TargetFramework>
+    <IncludeBuildOutput>False</IncludeBuildOutput>
+    <ContentTargetFolders>content</ContentTargetFolders>
+    <NoWarn>$(NoWarn);NU5128</NoWarn>
+    <NoDefaultExcludes>True</NoDefaultExcludes>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <IncludeContentInPack>True</IncludeContentInPack>
+    <Copyright>$(AssemblyCopyright)</Copyright>
+    
+    <!-- Everything is delay signed by default -->
+    <DelaySign>true</DelaySign>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <LocalizeTemplates>False</LocalizeTemplates>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(BuildingInsideVisualStudio)' == 'true'">
+    <!-- So you can make changes and re-run tests within VS without command-line builds -->
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- Lists the versions of dependencies not built in this repo.  -->
+    <GeneratedContentProperties>
+      DefaultNetCoreTargetFramework=$(DefaultNetCoreTargetFramework);
+      MicrosoftAspNetCoreOpenApiVersion=$(MicrosoftAspNetCoreOpenApiVersion);
+      MicrosoftAspNetCoreODataVersion=$(MicrosoftAspNetCoreODataVersion);
+    </GeneratedContentProperties>
+    <AssemblyOriginatorKeyFile>ODataWebApiTemplate.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>True</DelaySign>
+    <SignAssembly>True</SignAssembly>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.TemplateEngine.Tasks" Version="*" PrivateAssets="all" IsImplicitlyDefined="true" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <GeneratedContent Include="WebApiApplication.csproj.in" OutputPath="content/WebApi/ODataWebApi.WebApplication1.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="content\**\*" Exclude="content\**\bin\**;content\**\obj\**;content\**\*.g.cache" />
+    <Compile Remove="**\*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="ODataWebApiTemplate.content.g.cache" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="images\icon.png" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

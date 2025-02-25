@@ -1,0 +1,142 @@
+//#if (ConfigureHttps)
+# For HTTPS
+@HostAddress = https://localhost:5008
+
+# For HTTP
+# @HostAddress = http://localhost:5007
+//#else
+# For HTTP
+@HostAddress = http://localhost:5007
+//#endif
+
+### Get metadata
+GET {{HostAddress}}/odata/$metadata
+Accept: application/json
+
+### Get list of customers
+GET {{HostAddress}}/odata/Customers
+Accept: application/json
+
+//#if (IsQueryOptionSelect)
+### Get Customer Types
+GET {{HostAddress}}/odata/Customers?$select=Type
+//#endif
+
+### Query customer by ID
+GET {{HostAddress}}/odata/Customers(1)
+Accept: application/json
+
+//#if (IsQueryOptionFilter)
+### Get Premium Customers
+GET {{HostAddress}}/odata/customers?$filter=Type%20eq%20%27Premium%27
+Accept: application/json
+//#endif
+
+### Get customer by name
+GET {{HostAddress}}/odata/Customers/GetCustomerByName(name='Customer1')
+Accept: application/json
+
+//#if (IsQueryOptionExpand)
+### Get customers with their orders
+GET {{HostAddress}}/odata/Customers?$Expand=Orders
+Accept: application/json
+//#endif
+
+### Calculate Customers total amount
+GET {{HostAddress}}/odata/Customers(1)/GetCustomerOrdersTotalAmount
+Accept: application/json
+
+//#if (IsQueryOptionSelect && IsQueryOptionExpand)
+### Query customers' amounts
+GET {{HostAddress}}/odata/Customers?$Expand=Orders($Select=Amount)
+Accept: application/json
+//#endif
+
+//#if (IsQueryOptionSelect && IsQueryOptionExpand)
+### Query customers' orders
+GET {{HostAddress}}/odata/Customers?$Expand=Orders&$Select=Orders
+Accept: application/json
+//#endif
+
+//#if (IsQueryOptionOrderby)
+### Order customers by name
+GET {{HostAddress}}/odata/Customers?$OrderBy=Name%20desc
+Accept: application/json
+//#endif
+
+### Add a new customer
+POST {{HostAddress}}/odata/Customers
+Content-Type: application/json
+
+{
+    "Name": "John Doe",
+    "Type": "VIP"
+}
+
+//#if (IsQueryOptionCount)
+### Get customers count: @odata.count
+GET {{HostAddress}}/odata/Customers?$count=true
+Accept: application/json
+//#endif
+
+### Update customer name
+PATCH {{HostAddress}}/odata/Customers(3)
+Content-Type: application/json
+
+{
+    "Name": "John Doe 23",
+    "Type": "Premium, VIP"
+}
+
+//#if (EnableDefaultODataBatch)
+### All in One with OData $Batch
+POST {{HostAddress}}/odata/$batch
+Content-Type: application/json
+
+{
+  "requests": [
+        {
+            "id": "{{$guid}}",
+            "method": "GET",
+            "url": "Customers",
+            "headers": {
+              "content-type": "application/json"
+            }
+        },
+        {
+            "id": "{{$guid}}",
+            "method": "POST",
+            "url": "Customers",
+            "headers": {
+              "content-type": "application/json"
+            },
+            "body": {
+              "Name": "Customer Batch",
+              "Type": "Premium"
+            }
+        },
+        {
+            "id": "{{$guid}}",
+            "method": "PATCH",
+            "url": "Customers(2)",
+            "headers": {
+              "content-type": "application/json"
+            },
+            "body": {
+              "Name": "Customer Update with Batch",
+              "Type": "Premium,VIP"
+            }
+        },
+        {
+            "id": "{{$guid}}",
+            "method": "GET",
+            "url": "Customers",
+            "headers": {
+              "content-type": "application/json"
+            }
+        }
+    ]
+}
+//#endif
+
+### Add more endpoints here

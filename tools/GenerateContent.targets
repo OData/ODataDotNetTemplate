@@ -1,0 +1,59 @@
+<Project>
+  <Import Project="GenerateTemplate.tasks.targets"/>
+
+  <PropertyGroup>
+    <!-- Use for incremental builds. When versions or dependencies of templates change, this file is updated and causes a re-build. -->
+    <_GenerateContentPropertiesHashFile>$(IntermediateOutputPath)$(MSBuildProjectName).content.g.cache</_GenerateContentPropertiesHashFile>
+  </PropertyGroup>
+
+  <!--
+    Generates content using MSBuild variables.
+  -->
+  <Target Name="GetPackageVersionVariables">
+    <MSBuild Projects="@(PackageVersionVariableReference)"
+             BuildInParallel="true"
+             Targets="_GetPackageVersionInfo">
+      <Output TaskParameter="TargetOutputs" ItemName="_ResolvedPackageVersionVariableReference" />
+    </MSBuild>
+
+    <PropertyGroup>
+      <GeneratedContentProperties>
+        $(GeneratedContentProperties);
+        @(_ResolvedPackageVersionVariableReference->'%(VersionVariableName)=%(PackageVersion)')</GeneratedContentProperties>
+    </PropertyGroup>
+
+    <Hash ItemsToHash="$(GeneratedContentProperties)">
+      <Output TaskParameter="HashResult" PropertyName="_GeneratedContentPropertiesHash" />
+    </Hash>
+
+    <WriteLinesToFile Overwrite="true" Lines="$(_GeneratedContentPropertiesHash)" File="$(_GenerateContentPropertiesHashFile)" WriteOnlyWhenDifferent="true" />
+  </Target>
+
+  <Target Name="_GetPackageVersionInfo" DependsOnTargets="$(GetPackageVersionDependsOn)"
+          Returns="@(_ProjectPathWithVersion)">
+    <ItemGroup>
+      <_ProjectPathWithVersion Include="$(MSBuildProjectFullPath)">
+        <PackageId>$(PackageId)</PackageId>
+        <PackageVersion>$(PackageVersionForPackageVersionInfo)</PackageVersion>
+        <VersionSuffix>$(VersionSuffix)</VersionSuffix>
+        <VersionVariableName>$(PackageId.Replace('.',''))Version</VersionVariableName>
+      </_ProjectPathWithVersion>
+    </ItemGroup>
+  </Target>
+
+  <Target Name="GenerateContent"
+          DependsOnTargets="GetPackageVersionVariables"
+          BeforeTargets="CoreCompile"
+          Inputs="$(_GenerateContentPropertiesHashFile);@(GeneratedContent)"
+          Outputs="@(GeneratedContent->'%(OutputPath)')">
+
+    <GenerateFileFromTemplate
+      TemplateFile="%(GeneratedContent.Identity)"
+      Properties="$(GeneratedContentProperties);%(GeneratedContent.AdditionalProperties)"
+      OutputPath="%(GeneratedContent.OutputPath)">
+
+      <Output TaskParameter="ResolvedOutputPath" ItemName="FileWrites" />
+      <Output TaskParameter="ResolvedOutputPath" ItemName="Content" />
+    </GenerateFileFromTemplate>
+  </Target>
+</Project>

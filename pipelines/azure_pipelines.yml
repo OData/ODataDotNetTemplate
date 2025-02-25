@@ -1,0 +1,88 @@
+trigger:
+  branches:
+    include:
+    - main
+    - release/*
+
+pr:
+  - main
+  - release/*
+
+resources:
+  repositories:
+  - repository: self
+    type: git
+    ref: refs/heads/release/9.0
+  - repository: 1ESPipelineTemplates
+    type: git
+    name: 1ESPipelineTemplates/1ESPipelineTemplates
+    ref: refs/tags/release
+name: $(Date:yyyyMMdd).$(Rev:r)
+variables:
+- name: __NugetSecurityAnalysisWarningLevel__
+  value: none
+- name: BuildConfiguration
+  value: release
+- name: BuildPlatform
+  value: anycpu
+- name: ProductBinPath
+  value: $(Build.SourcesDirectory)\artifacts\bin\$(BuildPlatform)\$(BuildConfiguration)
+- name: runCodesignValidationInjection
+  value: false
+extends:
+  template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
+  parameters:
+    pool:
+      name: MSSecurity-1ES-Build-Agents-Pool
+      image: MSSecurity-1ES-Windows-2022
+      os: windows
+    customBuildTags:
+    - ES365AIMigrationTooling
+    stages:
+    - stage: build
+      jobs:
+      - job: Main
+        displayName: Main Build
+        timeoutInMinutes: 120
+        steps:
+        - checkout: self
+          fetchTags: false
+        - task: NuGetToolInstaller@1
+          displayName: Use NuGet >=5.2.0
+          inputs:
+            versionSpec: '>=5.2.0'
+            checkLatest: true
+        - task: UseDotNet@2
+          displayName: Use .NET Core SDK 9.x
+          inputs:
+            version: 9.x
+            includePreviewVersions: true
+        - task: DotNetCoreCLI@2
+          displayName: build ProjectTemplate ODataWebApi
+          inputs:
+            projects: $(Build.SourcesDirectory)\src\ProjectTemplate\ODataWebApiTemplate.csproj
+            arguments: --configuration $(BuildConfiguration) --no-incremental --property:GeneratePackageOnBuild=true
+        - task: DotNetCoreCLI@2
+          displayName: Build Tests Project (ODataWebApiTemplate.Tests)
+          inputs:
+            projects: $(Build.SourcesDirectory)\test\ODataWebApiTemplate.Tests\ODataWebApiTemplate.Tests.csproj
+            arguments: --configuration $(BuildConfiguration) --no-incremental
+        - task: DotNetCoreCLI@2
+          displayName: WebApiTemplate Tests
+          inputs:
+            command: test
+            projects: $(Build.SourcesDirectory)\test\ODataWebApiTemplate.Tests\ODataWebApiTemplate.Tests.csproj
+            arguments: --configuration $(BuildConfiguration) --no-build -l "console;verbosity=detailed"
+        - task: CmdLine@2
+          displayName: Install ReportGenerator tool for code coverage
+          inputs:
+            script: dotnet tool install --global dotnet-reportgenerator-globaltool --version 4.5.8
+        - task: CmdLine@2
+          displayName: Create code coverage report
+          inputs:
+            script: reportgenerator -reports:$(Agent.TempDirectory)/**/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/coverlet/reports -reporttypes:"Cobertura"
+        - task: PublishCodeCoverageResults@1
+          displayName: 'Publish code coverage '
+          inputs:
+            codeCoverageTool: Cobertura
+            summaryFileLocation: $(Build.SourcesDirectory)/coverlet/reports/Cobertura.xml
