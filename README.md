@@ -1,6 +1,6 @@
 # ASP.NET Core OData Sample Template
 
-This repository provides a .NET template for creating an ASP.NET Core WebAPI project with OData support. It supports configurations for .NET 9.0 and above, with appropriate setups for each version.
+This repository provides a .NET template for creating an ASP.NET Core WebAPI project with OData support. It supports configurations for .NET 8.0 and above, with appropriate setups for each version.
 
 ## Prerequisites
 

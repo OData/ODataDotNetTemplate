@@ -22,9 +22,9 @@ builder.Services.AddControllers().AddOData(opt =>
         defaultBatchHandler.MessageQuotas.MaxReceivedMessageSize = 100;
 
         opt.AddRouteComponents(
-                routePrefix: "odata",
-                model: EdmModelBuilder.GetEdmModel(),
-                batchHandler: defaultBatchHandler)
+            routePrefix: "odata",
+            model: EdmModelBuilder.GetEdmModel(),
+            batchHandler: defaultBatchHandler)
 #else
         opt.AddRouteComponents("odata", EdmModelBuilder.GetEdmModel())
 #endif
@@ -59,10 +59,13 @@ builder.Services.AddControllers().AddOData(opt =>
         opt.EnableNoDollarQueryOptions = false;
 #endif
 });
-
 #if (EnableOpenAPI)
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "ODataWebApi.WebApplication1", Version = "v1" });
+});
 #endif
 
 var app = builder.Build();
@@ -79,7 +82,8 @@ if (app.Environment.IsDevelopment())
 {
     app.UseODataRouteDebug();
 #if (EnableOpenAPI)
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ODataWebApi.WebApplication1 V1"));
 #endif
 }
 
