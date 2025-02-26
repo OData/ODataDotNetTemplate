@@ -72,7 +72,7 @@ extends:
           inputs:
             command: test
             projects: $(Build.SourcesDirectory)\test\ODataWebApiTemplate.Tests\ODataWebApiTemplate.Tests.csproj
-            arguments: --configuration $(BuildConfiguration) --no-build -l "console;verbosity=detailed"
+            arguments: --configuration $(BuildConfiguration) --no-build --collect "XPlat Code coverage" -l "console;verbosity=detailed"
         - task: CmdLine@2
           displayName: Install ReportGenerator tool for code coverage
           inputs:
