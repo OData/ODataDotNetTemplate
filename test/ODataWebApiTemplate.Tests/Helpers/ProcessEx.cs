@@ -147,7 +147,7 @@ internal sealed class ProcessEx : IDisposable
             {
                 if(e.Data != string.Empty || e.Data.ToString() != "")
                 {
-                    _output.WriteLine("[ERROR] " + e.Data);
+                    _output.WriteLine(e.Data);
                 }
             }
         }
