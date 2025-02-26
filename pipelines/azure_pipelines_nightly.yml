@@ -165,14 +165,8 @@ extends:
                 }
               ]
             VerboseLogin: true
-        - task: MSBuild@1
-          displayName: Get Nuget Package Metadata
-          inputs:
-            solution: tool/GetNugetPackageMetadata.proj
-            platform: $(BuildPlatform)
-            configuration: $(BuildConfiguration)
         - task: NuGetCommand@2
-          displayName: NuGet - pack Microsoft.AspNetCoreOData.WebApiTemplate Nightly - --property:IsNightlyBuild=true
+          displayName: NuGet - pack Microsoft.AspNetCoreOData.WebApiTemplate Nightly with (--property:IsNightlyBuild=true)
           inputs:
             command: custom
             arguments: pack $(Build.SourcesDirectory)\src\ProjectTemplate\ODataWebApiTemplate.csproj -NonInteractive -OutputDirectory $(Build.ArtifactStagingDirectory)\Nuget -Properties Configuration=$(BuildConfiguration);IsNightlyBuild=true -Verbosity Detailed -Symbols  -SymbolPackageFormat snupkg
