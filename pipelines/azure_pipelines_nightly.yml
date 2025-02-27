@@ -173,7 +173,7 @@ extends:
             configuration: $(BuildConfiguration)
             packDirectory: $(Build.ArtifactStagingDirectory)\Nuget
             verbosityPack: Detailed
-            arguments: -p:IsNightlyBuild=true --include-symbols -p:SymbolPackageFormat=snupkg
+            arguments: --artifacts-path $(Build.ArtifactStagingDirectory)\Nuget -p:IsNightlyBuild=true --include-symbols -p:SymbolPackageFormat=snupkg
         - task: DotNetCoreCLI@2
           displayName: Pack Microsoft.AspNetCoreOData.WebApiTemplate Release
           inputs:
@@ -182,7 +182,7 @@ extends:
             configuration: $(BuildConfiguration)
             packDirectory: $(Build.ArtifactStagingDirectory)\Nuget
             verbosityPack: Detailed
-            arguments: --include-symbols -p:SymbolPackageFormat=snupkg
+            arguments: --artifacts-path $(Build.ArtifactStagingDirectory)\Nuget --include-symbols -p:SymbolPackageFormat=snupkg
         - task: EsrpCodeSigning@5
           displayName: ESRP CodeSigning - WebAPI OData Packages Signing
           inputs:
