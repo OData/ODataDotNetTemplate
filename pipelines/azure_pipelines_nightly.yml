@@ -165,24 +165,16 @@ extends:
                 }
               ]
             VerboseLogin: true
-        - task: DotNetCoreCLI@2
-          displayName: Pack Microsoft.AspNetCoreOData.WebApiTemplate Nightly - (-p:IsNightlyBuild=true)
+        - task: NuGetCommand@2
+          displayName: NuGet - pack Microsoft.AspNetCoreOData.WebApiTemplate Nightly with (--property:IsNightlyBuild=true)
           inputs:
-            command: pack
-            packagesToPack: $(Build.SourcesDirectory)\src\ProjectTemplate\ODataWebApiTemplate.csproj
-            configuration: $(BuildConfiguration)
-            # packDirectory: $(Build.ArtifactStagingDirectory)\Nuget
-            verbosityPack: Detailed
-            arguments: -o $(Build.ArtifactStagingDirectory)\Nuget -p:IsNightlyBuild=true --include-symbols -p:SymbolPackageFormat=snupkg
-        - task: DotNetCoreCLI@2
-          displayName: Pack Microsoft.AspNetCoreOData.WebApiTemplate Release
+            command: custom
+            arguments: pack $(Build.SourcesDirectory)\src\ProjectTemplate\ODataWebApiTemplate.csproj -NonInteractive -OutputDirectory $(Build.ArtifactStagingDirectory)\Nuget -Properties Configuration=$(BuildConfiguration);IsNightlyBuild=true -Verbosity Detailed -Symbols  -SymbolPackageFormat snupkg
+        - task: NuGetCommand@2
+          displayName: NuGet - pack Microsoft.AspNetCoreOData.WebApiTemplate Release
           inputs:
-            command: pack
-            packagesToPack: $(Build.SourcesDirectory)\src\ProjectTemplate\ODataWebApiTemplate.csproj
-            configuration: $(BuildConfiguration)
-            # packDirectory: $(Build.ArtifactStagingDirectory)\Nuget
-            verbosityPack: Detailed
-            arguments: -o $(Build.ArtifactStagingDirectory)\Nuget --include-symbols -p:SymbolPackageFormat=snupkg
+            command: custom
+            arguments: pack $(Build.SourcesDirectory)\src\ProjectTemplate\ODataWebApiTemplate.csproj -NonInteractive -OutputDirectory $(Build.ArtifactStagingDirectory)\Nuget -Properties Configuration=$(BuildConfiguration) -Verbosity Detailed -Symbols  -SymbolPackageFormat snupkg
         - task: EsrpCodeSigning@5
           displayName: ESRP CodeSigning - WebAPI OData Packages Signing
           inputs:
