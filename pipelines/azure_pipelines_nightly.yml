@@ -165,11 +165,26 @@ extends:
                 }
               ]
             VerboseLogin: true
-        - task: NuGetCommand@2
-          displayName: NuGet - pack Microsoft.AspNetCoreOData.WebApiTemplate Nightly with (--property:IsNightlyBuild=true)
+        - task: DotNetCoreCLI@2
+          displayName: Pack Microsoft.AspNetCoreOData.WebApiTemplate Nightly - (-p:IsNightlyBuild=true)
           inputs:
-            command: custom
-            arguments: pack $(Build.SourcesDirectory)\src\ProjectTemplate\ODataWebApiTemplate.csproj -NonInteractive -OutputDirectory $(Build.ArtifactStagingDirectory)\Nuget -Properties Configuration=$(BuildConfiguration);IsNightlyBuild=true -Verbosity Detailed -Symbols  -SymbolPackageFormat snupkg
+            command: pack
+            packagesToPack: $(Build.SourcesDirectory)\src\ProjectTemplate\ODataWebApiTemplate.csproj
+            configuration: $(BuildConfiguration)
+            packDirectory: $(Build.ArtifactStagingDirectory)\Nuget
+            verbosityPack: Detailed
+            includeSymbols: true
+            arguments: -o $(Build.ArtifactStagingDirectory) -p:IsNightlyBuild=true
+        - task: DotNetCoreCLI@2
+          displayName: Pack Microsoft.AspNetCoreOData.WebApiTemplate Release
+          inputs:
+            command: pack
+            packagesToPack: $(Build.SourcesDirectory)\src\ProjectTemplate\ODataWebApiTemplate.csproj
+            configuration: $(BuildConfiguration)
+            packDirectory: $(Build.ArtifactStagingDirectory)\Nuget
+            verbosityPack: Detailed
+            includeSymbols: true
+            arguments: -o $(Build.ArtifactStagingDirectory)
         - task: NuGetCommand@2
           displayName: NuGet - pack Microsoft.AspNetCoreOData.WebApiTemplate Release
           inputs:
