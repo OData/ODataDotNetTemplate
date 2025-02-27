@@ -39,7 +39,7 @@ public override bool Execute()
     return !Log.HasLoggedErrors;
 }
 
-private string Replace(string template, IDictionary<string, string> values)
+string Replace(string template, IDictionary<string, string> values)
 {
     StringBuilder sb = new();
     StringBuilder varNameSb = new();
@@ -113,7 +113,7 @@ private string Replace(string template, IDictionary<string, string> values)
     return sb.ToString();
 }
 
-private IDictionary<string, string> GetNamedProperties(string[] input, TaskLoggingHelper log)
+IDictionary<string, string> GetNamedProperties(string[] input, TaskLoggingHelper log)
 {
     Dictionary<string, string> values = new(StringComparer.OrdinalIgnoreCase);
     if (input == null)

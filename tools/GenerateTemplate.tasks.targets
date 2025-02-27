@@ -25,6 +25,9 @@
 
     Example Usage:
         <GenerateFileFromTemplate TemplateFile="path/to/template" OutputPath="path/to/output" Properties="@(Properties)" />
+
+    More information:
+    - https://learn.microsoft.com/visualstudio/msbuild/usingtask-element-msbuild?view=vs-2022
 -->
   <UsingTask
         TaskName="GenerateFileFromTemplate"
@@ -37,6 +40,8 @@
             <ResolvedOutputPath ParameterType="System.String" Output="true" />
         </ParameterGroup>
         <Task>
+            <Reference Include="$(MSBuildToolsPath)\Microsoft.Build.Framework.dll" />
+            <Reference Include="$(MSBuildToolsPath)\Microsoft.Build.Utilities.dll" />
             <Using Namespace="System.Collections.Generic" />
             <Using Namespace="System.IO" />
             <Using Namespace="System.Text" />
