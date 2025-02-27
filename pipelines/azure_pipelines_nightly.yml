@@ -110,14 +110,14 @@ extends:
             inlineOperation: |-
               [
                 {
-                  "keyCode": "ODataWebApiTemplate",
+                  "keyCode": "MSSharedLibSnKey",
                   "operationSetCode": "StrongNameSign",
                   "parameters": null,
                   "toolName": "sn.exe",
                   "toolVersion": "V4.6.1586.0"
                 },
                 {
-                  "keyCode": "ODataWebApiTemplate",
+                  "keyCode": "MSSharedLibSnKey",
                   "operationSetCode": "StrongNameVerify",
                   "parameters": null,
                   "toolName": "sn.exe",
