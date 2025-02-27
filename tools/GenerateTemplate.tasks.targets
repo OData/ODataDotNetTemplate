@@ -1,4 +1,4 @@
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="16.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 <!--
     This MSBuild task generates a file from a template by replacing placeholders with specified properties.
 
@@ -27,7 +27,8 @@
         <GenerateFileFromTemplate TemplateFile="path/to/template" OutputPath="path/to/output" Properties="@(Properties)" />
 
     More information:
-    - https://learn.microsoft.com/visualstudio/msbuild/usingtask-element-msbuild?view=vs-2022
+    - https://learn.microsoft.com/visualstudio/msbuild/usingtask-element-msbuild?view=vs-2019
+    - https://learn.microsoft.com/visualstudio/msbuild/msbuild-roslyncodetaskfactory?view=vs-2019
 -->
   <UsingTask
         TaskName="GenerateFileFromTemplate"

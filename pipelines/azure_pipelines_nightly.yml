@@ -77,6 +77,7 @@ extends:
         - task: DotNetCoreCLI@2
           displayName: Build ProjectTemplate ODataWebApi
           inputs:
+            command: msbuild
             projects: $(Build.SourcesDirectory)\src\ProjectTemplate\ODataWebApiTemplate.csproj
             arguments: --configuration $(BuildConfiguration) --no-incremental --property:GeneratePackageOnBuild=true
         - task: CopyFiles@2
@@ -88,6 +89,7 @@ extends:
         - task: DotNetCoreCLI@2
           displayName: Build Tests Project (ODataWebApiTemplate.Tests)
           inputs:
+            command: msbuild
             projects: $(Build.SourcesDirectory)\test\ODataWebApiTemplate.Tests\ODataWebApiTemplate.Tests.csproj
             arguments: --configuration $(BuildConfiguration) --no-incremental
         - task: UseDotNet@2
