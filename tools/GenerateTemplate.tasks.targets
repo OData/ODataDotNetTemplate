@@ -40,8 +40,6 @@
             <ResolvedOutputPath ParameterType="System.String" Output="true" />
         </ParameterGroup>
         <Task>
-            <Reference Include="$(MSBuildToolsPath)\Microsoft.Build.Framework.dll" />
-            <Reference Include="$(MSBuildToolsPath)\Microsoft.Build.Utilities.dll" />
             <Using Namespace="System.Collections.Generic" />
             <Using Namespace="System.IO" />
             <Using Namespace="System.Text" />
