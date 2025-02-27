@@ -166,7 +166,7 @@ extends:
               ]
             VerboseLogin: true
         - task: DotNetCoreCLI@2
-          displayName: Pack Microsoft.AspNetCoreOData.WebApiTemplate Nightly - (-p:IsNightlyBuild=true)
+          displayName: Dotnet - Pack Microsoft.AspNetCoreOData.WebApiTemplate Nightly - (-p:IsNightlyBuild=true)
           inputs:
             command: pack
             packagesToPack: $(Build.SourcesDirectory)\src\ProjectTemplate\ODataWebApiTemplate.csproj
@@ -176,7 +176,7 @@ extends:
             includeSymbols: true
             arguments: -o $(Build.ArtifactStagingDirectory) -p:IsNightlyBuild=true
         - task: DotNetCoreCLI@2
-          displayName: Pack Microsoft.AspNetCoreOData.WebApiTemplate Release
+          displayName: Dotnet - Pack Microsoft.AspNetCoreOData.WebApiTemplate Release
           inputs:
             command: pack
             packagesToPack: $(Build.SourcesDirectory)\src\ProjectTemplate\ODataWebApiTemplate.csproj
@@ -185,11 +185,6 @@ extends:
             verbosityPack: Detailed
             includeSymbols: true
             arguments: -o $(Build.ArtifactStagingDirectory)
-        - task: NuGetCommand@2
-          displayName: NuGet - pack Microsoft.AspNetCoreOData.WebApiTemplate Release
-          inputs:
-            command: custom
-            arguments: pack $(Build.SourcesDirectory)\src\ProjectTemplate\ODataWebApiTemplate.csproj -NonInteractive -OutputDirectory $(Build.ArtifactStagingDirectory)\Nuget -Properties Configuration=$(BuildConfiguration) -Verbosity Detailed -Symbols  -SymbolPackageFormat snupkg
         - task: EsrpCodeSigning@5
           displayName: ESRP CodeSigning - WebAPI OData Packages Signing
           inputs:
