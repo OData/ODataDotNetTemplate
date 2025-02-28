@@ -9,7 +9,7 @@ resources:
   repositories:
   - repository: self
     type: git
-    ref: refs/heads/main
+    ref: refs/heads/release/6.0
   - repository: 1ESPipelineTemplates
     type: git
     name: 1ESPipelineTemplates/1ESPipelineTemplates
@@ -80,10 +80,10 @@ extends:
             projects: $(Build.SourcesDirectory)\src\ProjectTemplate\ODataWebApiTemplate.csproj
             arguments: --configuration $(BuildConfiguration) --no-incremental --property:GeneratePackageOnBuild=true
         - task: CopyFiles@2
-          displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)\output'
+          displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)\output - from: $(Build.SourcesDirectory)\artifacts\bin\$(BuildPlatform)\$(BuildConfiguration)'
           inputs:
             SourceFolder: $(Build.SourcesDirectory)\artifacts\bin\$(BuildPlatform)\$(BuildConfiguration)\
-            Contents: '**\Microsoft.AspNetCore.OData.*'
+            Contents: '**'
             TargetFolder: $(Build.ArtifactStagingDirectory)\output
         - task: DotNetCoreCLI@2
           displayName: Build Tests Project (ODataWebApiTemplate.Tests)
@@ -95,7 +95,7 @@ extends:
           inputs:
             version: 2.x
         - task: EsrpCodeSigning@5
-          displayName: ESRP CodeSigning - WebAPI OData Product Signing
+          displayName: ESRP CodeSigning - OData Product Signing
           inputs:
             ConnectedServiceName: $(ODataEsrpConnectionServiceName)
             AppRegistrationClientId: '$(ODataEsrpAppRegistrationClientId)'
@@ -165,18 +165,28 @@ extends:
                 }
               ]
             VerboseLogin: true
-        - task: NuGetCommand@2
-          displayName: NuGet - pack Microsoft.AspNetCoreOData.WebApiTemplate Nightly - --property:IsNightlyBuild=true
+        - task: DotNetCoreCLI@2
+          displayName: Dotnet - Pack Microsoft.AspNetCoreOData.WebApiTemplate Nightly - IsNightlyBuild=true
           inputs:
-            command: custom
-            arguments: pack $(Build.SourcesDirectory)\src\ProjectTemplate\ODataWebApiTemplate.csproj -NonInteractive -OutputDirectory $(Build.ArtifactStagingDirectory)\Nuget -Properties Configuration=$(BuildConfiguration);IsNightlyBuild=true -Verbosity Detailed -Symbols  -SymbolPackageFormat snupkg
-        - task: NuGetCommand@2
-          displayName: NuGet - pack Microsoft.AspNetCoreOData.WebApiTemplate Release
+            command: pack
+            packagesToPack: $(Build.SourcesDirectory)\src\ProjectTemplate\ODataWebApiTemplate.csproj
+            configuration: $(BuildConfiguration)
+            packDirectory: $(Build.ArtifactStagingDirectory)\Nuget
+            verbosityPack: Detailed
+            includeSymbols: true
+            arguments: -o $(Build.ArtifactStagingDirectory) -p:IsNightlyBuild=true
+        - task: DotNetCoreCLI@2
+          displayName: Dotnet - Pack Microsoft.AspNetCoreOData.WebApiTemplate Release
           inputs:
-            command: custom
-            arguments: pack $(Build.SourcesDirectory)\src\ProjectTemplate\ODataWebApiTemplate.csproj -NonInteractive -OutputDirectory $(Build.ArtifactStagingDirectory)\Nuget -Properties Configuration=$(BuildConfiguration) -Verbosity Detailed -Symbols  -SymbolPackageFormat snupkg
+            command: pack
+            packagesToPack: $(Build.SourcesDirectory)\src\ProjectTemplate\ODataWebApiTemplate.csproj
+            configuration: $(BuildConfiguration)
+            packDirectory: $(Build.ArtifactStagingDirectory)\Nuget
+            verbosityPack: Detailed
+            includeSymbols: true
+            arguments: -o $(Build.ArtifactStagingDirectory)
         - task: EsrpCodeSigning@5
-          displayName: ESRP CodeSigning - WebAPI OData Packages Signing
+          displayName: ESRP CodeSigning - OData Packages Signing
           inputs:
             ConnectedServiceName: $(ODataEsrpConnectionServiceName)
             AppRegistrationClientId: '$(ODataEsrpAppRegistrationClientId)'
