@@ -83,7 +83,6 @@ extends:
           displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)\output - from: $(Build.SourcesDirectory)\artifacts\bin\$(BuildPlatform)\$(BuildConfiguration)'
           inputs:
             SourceFolder: $(Build.SourcesDirectory)\artifacts\bin\$(BuildPlatform)\$(BuildConfiguration)\
-            # Contents: '**\ODataWebApiTemplates.*'
             Contents: '**'
             TargetFolder: $(Build.ArtifactStagingDirectory)\output
         - task: DotNetCoreCLI@2
@@ -96,7 +95,7 @@ extends:
           inputs:
             version: 2.x
         - task: EsrpCodeSigning@5
-          displayName: ESRP CodeSigning - WebAPI OData Product Signing
+          displayName: ESRP CodeSigning - OData Product Signing
           inputs:
             ConnectedServiceName: $(ODataEsrpConnectionServiceName)
             AppRegistrationClientId: '$(ODataEsrpAppRegistrationClientId)'
