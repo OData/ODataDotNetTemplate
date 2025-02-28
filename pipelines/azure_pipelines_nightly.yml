@@ -80,10 +80,11 @@ extends:
             projects: $(Build.SourcesDirectory)\src\ProjectTemplate\ODataWebApiTemplate.csproj
             arguments: --configuration $(BuildConfiguration) --no-incremental --property:GeneratePackageOnBuild=true
         - task: CopyFiles@2
-          displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)\output'
+          displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)\output from: $(Build.SourcesDirectory)\artifacts\bin\$(BuildPlatform)\$(BuildConfiguration)'
           inputs:
             SourceFolder: $(Build.SourcesDirectory)\artifacts\bin\$(BuildPlatform)\$(BuildConfiguration)\
-            Contents: '**\ODataWebApiTemplates.*'
+            # Contents: '**\ODataWebApiTemplates.*'
+            Contents: '**'
             TargetFolder: $(Build.ArtifactStagingDirectory)\output
         - task: DotNetCoreCLI@2
           displayName: Build Tests Project (ODataWebApiTemplate.Tests)
