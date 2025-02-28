@@ -45,7 +45,7 @@ To install the templates in this package, run 'dotnet new --install $(PackageId)
       MicrosoftAspNetCoreOpenApiVersion=$(MicrosoftAspNetCoreOpenApiVersion);
       MicrosoftAspNetCoreODataVersion=$(MicrosoftAspNetCoreODataVersion);
     </GeneratedContentProperties>
-    <AssemblyOriginatorKeyFile>ODataWebApiTemplate.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>$(ToolsPath)35MSSharedLib1024.snk</AssemblyOriginatorKeyFile>
     <DelaySign>True</DelaySign>
     <SignAssembly>True</SignAssembly>
   </PropertyGroup>
