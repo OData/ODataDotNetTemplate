@@ -83,7 +83,7 @@ extends:
           displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)\output'
           inputs:
             SourceFolder: $(Build.SourcesDirectory)\artifacts\bin\$(BuildPlatform)\$(BuildConfiguration)\
-            Contents: '**\Microsoft.AspNetCore.OData.*'
+            Contents: 'ODataWebApiTemplates.*'
             TargetFolder: $(Build.ArtifactStagingDirectory)\output
         - task: DotNetCoreCLI@2
           displayName: Build Tests Project (ODataWebApiTemplate.Tests)
@@ -166,7 +166,7 @@ extends:
               ]
             VerboseLogin: true
         - task: DotNetCoreCLI@2
-          displayName: Dotnet - Pack Microsoft.AspNetCoreOData.WebApiTemplate Nightly - (-p:IsNightlyBuild=true)
+          displayName: Dotnet - Pack Microsoft.AspNetCoreOData.WebApiTemplate Nightly - IsNightlyBuild=true
           inputs:
             command: pack
             packagesToPack: $(Build.SourcesDirectory)\src\ProjectTemplate\ODataWebApiTemplate.csproj
@@ -186,7 +186,7 @@ extends:
             includeSymbols: true
             arguments: -o $(Build.ArtifactStagingDirectory)
         - task: EsrpCodeSigning@5
-          displayName: ESRP CodeSigning - WebAPI OData Packages Signing
+          displayName: ESRP CodeSigning - OData Packages Signing
           inputs:
             ConnectedServiceName: $(ODataEsrpConnectionServiceName)
             AppRegistrationClientId: '$(ODataEsrpAppRegistrationClientId)'
