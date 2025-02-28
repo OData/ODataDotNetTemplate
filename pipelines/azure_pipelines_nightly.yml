@@ -83,7 +83,7 @@ extends:
           displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)\output'
           inputs:
             SourceFolder: $(Build.SourcesDirectory)\artifacts\bin\$(BuildPlatform)\$(BuildConfiguration)\
-            Contents: 'ODataWebApiTemplates.*'
+            Contents: '**\ODataWebApiTemplates.*'
             TargetFolder: $(Build.ArtifactStagingDirectory)\output
         - task: DotNetCoreCLI@2
           displayName: Build Tests Project (ODataWebApiTemplate.Tests)
