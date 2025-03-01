@@ -23,7 +23,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 
     <!-- package, obj and bin folder -->
-    <ArtifactsShippingPackagesDir Condition=" '$(ArtifactsShippingPackagesDir)'=='' ">$(ArtifactsPath)package\$(Platform)\$(Configuration)\</ArtifactsShippingPackagesDir>
+    <ArtifactsShippingPackagesDir Condition=" '$(ArtifactsShippingPackagesDir)'=='' ">$(ArtifactsPath)package\$(Configuration)\</ArtifactsShippingPackagesDir>
 
     <!-- Output and intermediate output root dir -->
     <IntermediateOutputPath Condition=" '$(IntermediateOutputPath)'=='' ">$(ArtifactsPath)obj\$(Platform)\$(Configuration)\$(MSBuildProjectFile)\</IntermediateOutputPath>
