@@ -175,13 +175,13 @@ extends:
           inputs:
             command: custom
             custom: 'pack'
-            arguments: '$(Build.SourcesDirectory)\src\ProjectTemplate\ODataWebApiTemplate.csproj -c $(BuildConfiguration) -o $(Build.ArtifactStagingDirectory)\Nuget -v Detailed -p:IsNightlyBuild=true -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg'
+            arguments: '$(Build.SourcesDirectory)\src\ProjectTemplate\ODataWebApiTemplate.csproj -c $(BuildConfiguration) -o $(Build.ArtifactStagingDirectory)\Nuget -v Detailed -p:IsNightlyBuild=true -p:IncludeSymbols=true'
         - task: DotNetCoreCLI@2
           displayName: Dotnet - Pack Microsoft.AspNetCoreOData.WebApiTemplate Release
           inputs:
             command: custom
             custom: 'pack'
-            arguments: '$(Build.SourcesDirectory)\src\ProjectTemplate\ODataWebApiTemplate.csproj -c $(BuildConfiguration) -o $(Build.ArtifactStagingDirectory)\Nuget -v Detailed -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg'
+            arguments: '$(Build.SourcesDirectory)\src\ProjectTemplate\ODataWebApiTemplate.csproj -c $(BuildConfiguration) -o $(Build.ArtifactStagingDirectory)\Nuget -v Detailed -p:IncludeSymbols=true'
         - task: EsrpCodeSigning@5
           displayName: ESRP CodeSigning - OData Packages Signing
           inputs:
