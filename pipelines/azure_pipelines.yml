@@ -57,11 +57,16 @@ extends:
           inputs:
             version: 6.x
             includePreviewVersions: true
+        - task: UseDotNet@2
+          displayName: Use .NET Core SDK 8.x
+          inputs:
+            version: 8.x
+            includePreviewVersions: true
         - task: DotNetCoreCLI@2
           displayName: Build ProjectTemplate ODataWebApi
           inputs:
             projects: $(Build.SourcesDirectory)\src\ProjectTemplate\ODataWebApiTemplate.csproj
-            arguments: --configuration $(BuildConfiguration) --no-incremental -p:GeneratePackageOnBuild=true -p:PackageOutputPath=$(Build.SourcesDirectory)\artifacts\package\$(BuildPlatform)\$(BuildConfiguration)
+            arguments: --configuration $(BuildConfiguration) --no-incremental -p:GeneratePackageOnBuild=true
         - task: DotNetCoreCLI@2
           displayName: Build Tests Project (ODataWebApiTemplate.Tests)
           inputs:
