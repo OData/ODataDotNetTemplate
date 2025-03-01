@@ -10,12 +10,6 @@
   <!-- For NuGet Package Dependencies -->
   <PropertyGroup>
     <DefaultNetCoreTargetFramework>net6.0</DefaultNetCoreTargetFramework>
-
-    <!-- Swagger/OpenAPI Versions -->
-    <SwashbuckleAspNetCore>6.7.3</SwashbuckleAspNetCore>
-
-    <!-- Microsoft.AspNetCore.OData Versions -->
-    <MicrosoftAspNetCoreODataVersion>8.2.7</MicrosoftAspNetCoreODataVersion>
 </PropertyGroup>
 
   <!--

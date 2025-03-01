@@ -364,5 +364,4 @@ FodyWeavers.xsd
 
 # This will be auto-generated when building the project
 .SharedData
-/src/ProjectTemplate/content/WebApi/ODataWebApi.WebApplication1.csproj
 /.packages

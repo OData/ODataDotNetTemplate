@@ -60,7 +60,7 @@ extends:
             packageParentPath: '$(Build.ArtifactStagingDirectory)'
             packagesToPush: $(Build.ArtifactStagingDirectory)\Nuget\*Nightly*.nupkg
             nuGetFeedType: external
-            publishFeedCredentials: 'MyGet.org - AspNetCoreOData Feed'
+            publishFeedCredentials: 'MyGet.org - ODataWebApiTemplate Feed'
         steps:
         - checkout: self
           fetchTags: true
@@ -83,7 +83,7 @@ extends:
           displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)\output - from: $(Build.SourcesDirectory)\artifacts\bin\$(BuildPlatform)\$(BuildConfiguration)'
           inputs:
             SourceFolder: $(Build.SourcesDirectory)\artifacts\bin\$(BuildPlatform)\$(BuildConfiguration)\
-            Contents: '**'
+            Contents: '**\ODataWebApiTemplate*'
             TargetFolder: $(Build.ArtifactStagingDirectory)\output
         - task: DotNetCoreCLI@2
           displayName: Build Tests Project (ODataWebApiTemplate.Tests)
@@ -173,8 +173,7 @@ extends:
             configuration: $(BuildConfiguration)
             packDirectory: $(Build.ArtifactStagingDirectory)\Nuget
             verbosityPack: Detailed
-            includeSymbols: true
-            arguments: -o $(Build.ArtifactStagingDirectory) -p:IsNightlyBuild=true
+            arguments: -o $(Build.ArtifactStagingDirectory) -p:IsNightlyBuild=true -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg
         - task: DotNetCoreCLI@2
           displayName: Dotnet - Pack Microsoft.AspNetCoreOData.WebApiTemplate Release
           inputs:
@@ -183,8 +182,7 @@ extends:
             configuration: $(BuildConfiguration)
             packDirectory: $(Build.ArtifactStagingDirectory)\Nuget
             verbosityPack: Detailed
-            includeSymbols: true
-            arguments: -o $(Build.ArtifactStagingDirectory)
+            arguments: -o $(Build.ArtifactStagingDirectory) -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg
         - task: EsrpCodeSigning@5
           displayName: ESRP CodeSigning - OData Packages Signing
           inputs:
