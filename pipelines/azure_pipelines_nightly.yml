@@ -78,7 +78,7 @@ extends:
           displayName: Build ProjectTemplate ODataWebApi
           inputs:
             projects: $(Build.SourcesDirectory)\src\ProjectTemplate\ODataWebApiTemplate.csproj
-            arguments: --configuration $(BuildConfiguration) --no-incremental -p:GeneratePackageOnBuild=true -p:PackageOutputPath=$(Build.SourcesDirectory)\artifacts\$(BuildConfiguration)
+            arguments: --configuration $(BuildConfiguration) --no-incremental -p:GeneratePackageOnBuild=true -p:PackageOutputPath=$(Build.SourcesDirectory)\artifacts\package\$(BuildPlatform)\$(BuildConfiguration)
         - task: CopyFiles@2
           displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)\output - from: $(Build.SourcesDirectory)\artifacts\bin\$(BuildPlatform)'
           inputs:
