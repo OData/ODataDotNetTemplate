@@ -7,7 +7,7 @@
     <!-- tools path with end '\' -->
     <ToolsPath Condition=" '$(ToolsPath)'=='' ">$(RootPath)\tools\</ToolsPath>
 
-	  <!-- tools path with end '\' -->
+	  <!-- artifacts path with end '\' -->
 	  <ArtifactsPath Condition=" '$(ArtifactsPath)'=='' ">$(RootPath)\artifacts\</ArtifactsPath>
   </PropertyGroup>
 
@@ -23,7 +23,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 
     <!-- package, obj and bin folder -->
-    <ArtifactsShippingPackagesDir Condition=" '$(ArtifactsShippingPackagesDir)'=='' ">$(ArtifactsPath)package\$(Configuration)\</ArtifactsShippingPackagesDir>
+    <ArtifactsShippingPackagesDir Condition=" '$(ArtifactsShippingPackagesDir)'=='' ">$(ArtifactsPath)package\$(Platform)\$(Configuration)\</ArtifactsShippingPackagesDir>
 
     <!-- Output and intermediate output root dir -->
     <IntermediateOutputPath Condition=" '$(IntermediateOutputPath)'=='' ">$(ArtifactsPath)obj\$(Platform)\$(Configuration)\$(MSBuildProjectFile)\</IntermediateOutputPath>
