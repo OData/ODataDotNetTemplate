@@ -26,8 +26,8 @@
     <ArtifactsShippingPackagesDir Condition=" '$(ArtifactsShippingPackagesDir)'=='' ">$(ArtifactsPath)package\$(Configuration)\</ArtifactsShippingPackagesDir>
 
     <!-- Output and intermediate output root dir -->
-    <IntermediateOutputPath Condition=" '$(IntermediateOutputPath)'=='' ">$(ArtifactsPath)obj\$(Platform)\$(Configuration)\$(DefaultNetCoreTargetFramework)\$(MSBuildProjectFile)\</IntermediateOutputPath>
-    <OutputPath Condition="'$(OutputPath)' == ''">$(ArtifactsPath)bin\$(Platform)\$(Configuration)\$(DefaultNetCoreTargetFramework)\</OutputPath>
+    <IntermediateOutputPath Condition=" '$(IntermediateOutputPath)'=='' ">$(ArtifactsPath)obj\$(Platform)\$(Configuration)\$(MSBuildProjectFile)\</IntermediateOutputPath>
+    <OutputPath Condition="'$(OutputPath)' == ''">$(ArtifactsPath)bin\$(Platform)\$(Configuration)\</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">

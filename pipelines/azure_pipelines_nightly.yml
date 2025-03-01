@@ -60,7 +60,7 @@ extends:
             packageParentPath: '$(Build.ArtifactStagingDirectory)'
             packagesToPush: $(Build.ArtifactStagingDirectory)\Nuget\*Nightly*.nupkg
             nuGetFeedType: external
-            publishFeedCredentials: 'MyGet.org - ODataWebApiTemplate Feed'
+            publishFeedCredentials: 'MyGet.org - AspNetCoreOData Feed'
         steps:
         - checkout: self
           fetchTags: true
