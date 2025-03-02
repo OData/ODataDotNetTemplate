@@ -1,5 +1,5 @@
 # OData ASP.NET Core Web Template Pack for Microsoft Template Engine
-This .NET template helps you create an ASP.NET Core WebAPI project with OData support. It supports different configurations for .NET 9.0 and above, with appropriate setup for each version.
+This .NET template helps you create an ASP.NET Core WebAPI project with OData support. It supports different configurations for .NET 6.0 and above, with appropriate setup for each version.
 
 ## Prerequisites
 
@@ -16,13 +16,13 @@ Follow these steps to use the template locally:
 Install the template using the dotnet new command:
 
 ```bash
-dotnet new install Microsoft.AspNetCoreOData.WebApiTemplate.9.0
+dotnet new install Microsoft.AspNetCoreOData.WebApiTemplate.6.0
 ```
 
 To specify the PackageVersion explicitly:
 
 ```bash
-dotnet new install Microsoft.AspNetCoreOData.WebApiTemplate.9.0::<PackageVersion>
+dotnet new install Microsoft.AspNetCoreOData.WebApiTemplate.6.0::<PackageVersion>
 ```
 
 ### 2. Create a New Project Using the Template
@@ -50,10 +50,10 @@ Options:
   --type <project>        Specifies the template type to instantiate.
 
 Template options:
-  -f, --framework <net9.0>                                  The target framework for the project.
+  -f, --framework <net6.0>                                  The target framework for the project.
                                                             Type: choice
-                                                              net9.0  Target net9.0
-                                                            Default: net9.0
+                                                              net6.0  Target net6.0
+                                                            Default: net6.0
   -qo, --query-option <count|expand|filter|orderby|select>  OData System Query Options.
                                                             Type: choice
                                                               filter   Enable $filter query option
@@ -92,7 +92,7 @@ Template options:
 #### Create Template with Default Settings
 
 ```bash
-dotnet new odata-webapi -n MyODataService.API1 --framework net9.0
+dotnet new odata-webapi -n MyODataService.API1 --framework net6.0
 ```
 
 #### Enable OData Batching and with all Query-Options
@@ -110,7 +110,7 @@ dotnet new odata-webapi -n MyODataService.API4 --query-option filter select expa
 #### Enable OpenAPI/Swagger
 
 ```bash
-dotnet new odata-webapi -n MyODataService.API5 --framework net9.0 --enable-openapi true
+dotnet new odata-webapi -n MyODataService.API5 --framework net6.0 --enable-openapi true
 ```
 
 ### 3. Run the Project
@@ -127,7 +127,7 @@ dotnet run
 Uninstall the template using the dotnet new command:
 
 ```bash
-dotnet new uninstall Microsoft.AspNetCoreOData.WebApiTemplate.9.0
+dotnet new uninstall Microsoft.AspNetCoreOData.WebApiTemplate.6.0
 ```
 
 ## Project Structure

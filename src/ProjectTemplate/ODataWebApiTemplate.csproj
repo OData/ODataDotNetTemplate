@@ -39,12 +39,6 @@ To install the templates in this package, run 'dotnet new --install $(PackageId)
   </PropertyGroup>
 
   <PropertyGroup>
-    <!-- Lists the versions of dependencies not built in this repo.  -->
-    <GeneratedContentProperties>
-      DefaultNetCoreTargetFramework=$(DefaultNetCoreTargetFramework);
-      MicrosoftAspNetCoreOpenApiVersion=$(MicrosoftAspNetCoreOpenApiVersion);
-      MicrosoftAspNetCoreODataVersion=$(MicrosoftAspNetCoreODataVersion);
-    </GeneratedContentProperties>
     <DelaySign>True</DelaySign>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>$(ToolsPath)35MSSharedLib1024.snk</AssemblyOriginatorKeyFile>
@@ -52,10 +46,6 @@ To install the templates in this package, run 'dotnet new --install $(PackageId)
 
   <ItemGroup>
     <PackageReference Include="Microsoft.TemplateEngine.Tasks" Version="*" PrivateAssets="all" IsImplicitlyDefined="true" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <GeneratedContent Include="WebApiApplication.csproj.in" OutputPath="content/WebApi/ODataWebApi.WebApplication1.csproj" />
   </ItemGroup>
 
   <ItemGroup>

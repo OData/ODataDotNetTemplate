@@ -1,6 +1,5 @@
 <Project>
   <Import Project="Versions.Settings.targets" />
-  <Import Project="GenerateContent.targets" />
 
   <PropertyGroup>
     <AssemblyCompany>Microsoft Corporation.</AssemblyCompany>

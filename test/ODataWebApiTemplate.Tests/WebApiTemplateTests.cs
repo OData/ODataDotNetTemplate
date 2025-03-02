@@ -36,7 +36,7 @@ public class WebApiTemplateTests : IClassFixture<ProjectFactoryFixture>
         }
     }
 
-    private const string Framework = "net9.0";
+    private const string Framework = "net6.0";
 
     #region Tests generating an ASP.NET Core OData Web API project with default options and verifies its functionality.
 
@@ -74,14 +74,14 @@ public class WebApiTemplateTests : IClassFixture<ProjectFactoryFixture>
             // BATCH
             await aspNetProcess.AssertNotFound("odata/$batch");
 
-            // openapi/v1.json
+            // Swagger
             if (enableOpenApiOrSwagger)
             {
-                await aspNetProcess.AssertOk("openapi/v1.json");
+                await aspNetProcess.AssertOk("swagger");
             }
             else
             {
-                await aspNetProcess.AssertNotFound("openapi/v1.json");
+                await aspNetProcess.AssertNotFound("swagger");
             }
         }
     }
