@@ -7,7 +7,7 @@
     <!-- tools path with end '\' -->
     <ToolsPath Condition=" '$(ToolsPath)'=='' ">$(RootPath)\tools\</ToolsPath>
 
-	  <!-- tools path with end '\' -->
+	  <!-- artifacts path with end '\' -->
 	  <ArtifactsPath Condition=" '$(ArtifactsPath)'=='' ">$(RootPath)\artifacts\</ArtifactsPath>
   </PropertyGroup>
 

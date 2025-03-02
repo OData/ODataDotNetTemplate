@@ -8,7 +8,7 @@
   <ItemGroup>
 	<PackageReference Include="Microsoft.AspNetCore.OData" Version="${MicrosoftAspNetCoreODataVersion}" />
 	<!--#if (EnableOpenAPI)-->
-	<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="${MicrosoftAspNetCoreOpenApiVersion}" Condition="'$(EnableOpenAPI)' == 'True'" />
+	<PackageReference Include="Swashbuckle.AspNetCore" Version="${SwashbuckleAspNetCore}" Condition="'$(EnableOpenAPI)' == 'True'" />
 	<!--#endif-->
   </ItemGroup>
 

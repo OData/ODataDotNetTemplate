@@ -42,7 +42,7 @@ To install the templates in this package, run 'dotnet new --install $(PackageId)
     <!-- Lists the versions of dependencies not built in this repo.  -->
     <GeneratedContentProperties>
       DefaultNetCoreTargetFramework=$(DefaultNetCoreTargetFramework);
-      MicrosoftAspNetCoreOpenApiVersion=$(MicrosoftAspNetCoreOpenApiVersion);
+      SwashbuckleAspNetCore=$(SwashbuckleAspNetCore);
       MicrosoftAspNetCoreODataVersion=$(MicrosoftAspNetCoreODataVersion);
     </GeneratedContentProperties>
     <DelaySign>True</DelaySign>

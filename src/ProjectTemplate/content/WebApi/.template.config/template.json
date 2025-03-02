@@ -13,8 +13,8 @@
   "generatorVersions": "[1.0.0.0-*)",
   "description": "A project template for creating a RESTful Web API using AspNetCore OData controllers, with optional support for OpenAPI and other OData settings like System Query Options and OData Batching.",
   "groupIdentity": "Microsoft.AspNetCoreOData.WebApiTemplate",
-  "precedence": "90",
-  "identity": "Microsoft.AspNetCoreOData.WebApiTemplate.9.0",
+  "precedence": "80",
+  "identity": "Microsoft.AspNetCoreOData.WebApiTemplate.8.0",
   "shortName": "odata-webapi",
   "tags": {
     "language": "C#",
@@ -30,12 +30,12 @@
       "datatype": "choice",
       "choices": [
         {
-          "choice": "net9.0",
-          "description": "Target net9.0"
+          "choice": "net8.0",
+          "description": "Target net8.0"
         }
       ],
-      "defaultValue": "net9.0",
-      "replaces": "net9.0"
+      "defaultValue": "net8.0",
+      "replaces": "net8.0"
     },
     "ODataQueryOptions": {
       "type": "parameter",

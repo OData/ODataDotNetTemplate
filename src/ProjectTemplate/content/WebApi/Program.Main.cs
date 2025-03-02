@@ -65,9 +65,14 @@ namespace ODataWebApi.WebApplication1
                 opt.EnableNoDollarQueryOptions = false;
 #endif
             });
+
 #if (EnableOpenAPI)
-            // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-            builder.Services.AddOpenApi();
+            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ODataWebApi.WebApplication1", Version = "v1" });
+            });
 #endif
 
             var app = builder.Build();
@@ -83,15 +88,16 @@ namespace ODataWebApi.WebApplication1
             {
                 app.UseODataRouteDebug();
 #if (EnableOpenAPI)
-                app.MapOpenApi();
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ODataWebApi.WebApplication1 V1"));
 #endif
+
+                app.UseRouting();
+
+                app.MapControllers();
+
+                app.Run();
             }
-
-            app.UseRouting();
-
-            app.MapControllers();
-
-            app.Run();
         }
     }
 }
