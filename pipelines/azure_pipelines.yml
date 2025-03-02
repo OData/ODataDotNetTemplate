@@ -61,7 +61,7 @@ extends:
           displayName: Build ProjectTemplate ODataWebApi
           inputs:
             projects: $(Build.SourcesDirectory)\src\ProjectTemplate\ODataWebApiTemplate.csproj
-            arguments: --configuration $(BuildConfiguration) --no-incremental --property:GeneratePackageOnBuild=true
+            arguments: --configuration $(BuildConfiguration) --no-incremental -p:GeneratePackageOnBuild=true
         - task: DotNetCoreCLI@2
           displayName: Build Tests Project (ODataWebApiTemplate.Tests)
           inputs:
