@@ -1,5 +1,5 @@
 # OData ASP.NET Core Web Template Pack for Microsoft Template Engine
-This .NET template helps you create an ASP.NET Core WebAPI project with OData support. It supports different configurations for .NET 8.0 and above, with appropriate setup for each version.
+This .NET template helps you create an ASP.NET Core WebAPI project with OData support. It supports different configurations for .NET 6.0 and above, with appropriate setup for each version.
 
 ## Prerequisites
 
