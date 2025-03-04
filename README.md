@@ -1,6 +1,13 @@
 # ASP.NET Core OData Sample Template
 
-This repository provides a .NET template for creating an ASP.NET Core WebAPI project with OData support. It supports configurations for .NET 8.0 and above, with appropriate setups for each version.
+---
+
+Component | Build  | Status 
+--------|--------- |---------
+ASP.NET Core ODataDotNetTemplate|Rolling | [![Build Status](https://msazure.visualstudio.com/One/_apis/build/status/407212?repoName=OData/ODataDotNetTemplate&branchName=release/8.0)](https://msazure.visualstudio.com/One/_build/latest/407212?repoName=OData/ODataDotNetTemplate&branchName=release/8.0)
+ASP.NET Core ODataDotNetTemplate|Nightly | [![Build Status](https://msazure.visualstudio.com/One/_apis/build/status/407217?repoName=OData/ODataDotNetTemplate&branchName=release/8.0)](https://msazure.visualstudio.com/One/_build/latest/407217?repoName=OData/ODataDotNetTemplate&branchName=release/8.0)
+
+This repository provides a .NET template for creating an ASP.NET Core WebAPI project with OData support. It supports configurations for .NET 6.0 and above, with appropriate setups for each version.
 
 ## Prerequisites
 
@@ -95,7 +102,28 @@ artifacts/
 ## Branch Strategy
 
 - `main` contains actively developed code not yet released.
-- `release/<target-dotnet-framework>` contains code intended for release, targeting specific .NET framework versions.
+- `release/<target-dotnet-framework>` contains code intended for release, targeting specific .NET framework versions. For example, `release/6.0`, `release/8.0`, `release/9.0`...
+
+## IncrementVersion.ps1
+
+This script increments the version number in the specified msbuild props file. The version number can be incremented in the following ways:
+- Major version increment
+- Minor version increment
+- Revision version increment
+- Version release number increment
+
+### Parameters
+
+- `versionPath`: The path to the msbuild props file where the version number is specified.
+- `lastReleaseCommit`: The ID of the last commit to be released.
+- `forceMajorIncrement`: Whether to force an increment of the major version number.
+- `versionRelease`: The version number to be released. For example, preview, beta, alpha, etc.
+- `forceMinorIncrement`: Whether to force an increment of the minor version number.
+- `Help`: Show help.
+
+### Examples
+
+Increment the minor version number in the Versions.Settings.targets file:
 
 ## Template Project Structure
 
@@ -117,3 +145,13 @@ ODataWebApiApplication/
 └── appsettings.Development.json
 └── appsettings.json
 ```
+
+## Code of Conduct
+
+This project has adopted the [.NET Foundation Contributor Covenant Code of Conduct](https://dotnetfoundation.org/about/policies/code-of-conduct). For more information see the [Code of Conduct FAQ](https://dotnetfoundation.org/about/faq).
+
+### .NET Foundation
+
+This project is supported by the [.NET Foundation](https://dotnetfoundation.org).
+
+ODataDotNetTemplate is a Copyright of &copy; .NET Foundation and other contributors. It is licensed under [MIT License](https://github.com/OData/ODataDotNetTemplate/blob/main/License.txt)
