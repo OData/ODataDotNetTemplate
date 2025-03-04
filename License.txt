@@ -1,4 +1,4 @@
-AspNetCoreODataDotNetTemplate
+ODataDotNetTemplate
 
 Copyright (c) .NET Foundation and Contributors
 
