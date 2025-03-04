@@ -154,4 +154,4 @@ This project has adopted the [.NET Foundation Contributor Covenant Code of Condu
 
 This project is supported by the [.NET Foundation](https://dotnetfoundation.org).
 
-AspNetCoreOData is a Copyright of &copy; .NET Foundation and other contributors. It is licensed under [MIT License](https://github.com/OData/AspNetCoreOData/blob/main/License.txt)
+ODataDotNetTemplate is a Copyright of &copy; .NET Foundation and other contributors. It is licensed under [MIT License](https://github.com/OData/ODataDotNetTemplate/blob/main/License.txt)
