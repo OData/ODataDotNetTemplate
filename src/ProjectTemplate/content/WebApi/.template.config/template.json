@@ -274,6 +274,9 @@
   "primaryOutputs": [
     {
       "path": "ODataWebApi.WebApplication1.csproj"
+    },
+    {
+      "path": "readme-first.md"
     }
   ],
   "postActions": [
@@ -287,6 +290,24 @@
         }
       ],
       "actionId": "210D431B-A78B-4D2F-B762-4ED3E3EA9025",
+      "args": {
+        "files": "0"
+      },
+      "continueOnError": true
+    },
+    {
+      "id": "openInEditor",
+      "condition": "(HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\")",
+      "description": "Opens generated files in the editor",
+      "manualInstructions": [
+        {
+          "text": "Open readme-first.md in the editor."
+        }
+      ],
+      "actionId": "84C0DA21-51C8-4541-9940-6CA19AF04EE6",
+      "args": {
+        "files": "1"
+      },
       "continueOnError": true
     }
   ]
