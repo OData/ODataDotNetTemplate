@@ -1,9 +1,9 @@
-# OData ASP.NET Core Web Template Pack for Microsoft Template Engine
+# OData ASP.NET Core WebAPI Template Pack
 This .NET template helps you create an ASP.NET Core WebAPI project with OData support. It supports different configurations for .NET 6.0 and above, with appropriate setup for each version.
 
 ## Prerequisites
 
-- [Download and install .NET](https://dotnet.microsoft.com/en-us/download)
+- [Download and install .NET](https://dotnet.microsoft.com/download)
 - [Visual Studio IDE](https://visualstudio.microsoft.com/#vs-section) - optional
 - [VS Code](https://visualstudio.microsoft.com/#vscode-section) - optional
 
@@ -153,5 +153,5 @@ ODataWebApiApplication/
 
 ## Repository
 
-https://github.com/OData/AspNetCoreOData
+https://github.com/OData/ODataDotNetTemplate
 
