@@ -236,6 +236,10 @@
       "datatype": "bool",
       "description": "If specified, skips the automatic restore of the project on create.",
       "defaultValue": "false"
+    },
+    "HostIdentifier": {
+      "type": "bind",
+      "binding": "HostIdentifier"
     }
   },
   "sources": [
@@ -274,9 +278,6 @@
   "primaryOutputs": [
     {
       "path": "ODataWebApi.WebApplication1.csproj"
-    },
-    {
-      "path": "readme-first.md"
     }
   ],
   "postActions": [
@@ -298,16 +299,21 @@
     {
       "id": "openInEditor",
       "condition": "(HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\")",
-      "description": "Opens generated files in the editor",
-      "manualInstructions": [
-        {
-          "text": "Open readme-first.md in the editor."
-        }
-      ],
+      "description": "Opens readme-first.md in the editor.",
+      "manualInstructions": [],
       "actionId": "84C0DA21-51C8-4541-9940-6CA19AF04EE6",
       "args": {
-        "files": "1"
+        "files": [ "readme-first.md" ]
       },
+      "continueOnError": true
+    },
+    {
+      "id": "getStarted",
+      "condition": "(HostIdentifier == \"dotnetcli\" || HostIdentifier == \"dotnetcli-preview\")",
+      "description": "Get Started\n- [AspNetCoreOData Documentation](https://learn.microsoft.com/odata/webapi/getting-started)\n- [OData Documentation](https://docs.microsoft.com/en-us/odata/)\n- [OData Overview](https://learn.microsoft.com/odata/overview)\n- [OData Dev Blogs](https://devblogs.microsoft.com/search?query=OData&blogs=%2Fodata%2F)\n- [OData.org](https://www.odata.org/)",
+      "manualInstructions": [],
+      "actionId": "AC1156F7-BB77-4DB8-B28F-24EEBCCA1E5C",
+      "args": {},
       "continueOnError": true
     }
   ]
