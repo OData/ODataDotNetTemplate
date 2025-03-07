@@ -11,6 +11,7 @@ using Microsoft.OpenApi.Models;
 #endif
 using ODataWebApi.WebApplication1;
 
+// Learn more about configuring OData at https://learn.microsoft.com/odata/webapi-8/getting-started
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers().AddOData(opt =>
@@ -61,7 +62,7 @@ builder.Services.AddControllers().AddOData(opt =>
 });
 
 #if (EnableOpenAPI)
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+// Learn more about configuring OpenAPI at https://github.com/OData/AspNetCoreOData/tree/main/sample/ODataRoutingSample
 builder.Services.AddOpenApi();
 #endif
 
