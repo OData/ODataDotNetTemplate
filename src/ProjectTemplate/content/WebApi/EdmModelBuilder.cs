@@ -10,6 +10,7 @@ namespace ODataWebApi.WebApplication1
 {
     public class EdmModelBuilder
     {
+        // Learn more about OData Model Builder: https://learn.microsoft.com/odata/webapi/model-builder-abstract
         public static IEdmModel GetEdmModel()
         {
             var builder = new ODataConventionModelBuilder();
