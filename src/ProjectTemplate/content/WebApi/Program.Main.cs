@@ -66,9 +66,18 @@ namespace ODataWebApi.WebApplication1
                 opt.EnableNoDollarQueryOptions = false;
 #endif
             });
+
 #if (EnableOpenAPI)
-            // Learn more about configuring OpenAPI at https://github.com/OData/AspNetCoreOData/tree/main/sample/ODataRoutingSample
+            // Learn more about configuring Swagger/OpenAPI at https://github.com/OData/AspNetCoreOData/tree/main/sample/ODataRoutingSample
+#if (IsNet6Or8)
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ODataWebApi.WebApplication1", Version = "v1" });
+            });
+#else
             builder.Services.AddOpenApi();
+#endif
 #endif
 
             var app = builder.Build();
@@ -84,15 +93,20 @@ namespace ODataWebApi.WebApplication1
             {
                 app.UseODataRouteDebug();
 #if (EnableOpenAPI)
+#if (IsNet6Or8)
+                app.UseSwagger();
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ODataWebApi.WebApplication1 V1"));
+#else
                 app.MapOpenApi();
 #endif
+#endif
+
+                app.UseRouting();
+
+                app.MapControllers();
+
+                app.Run();
             }
-
-            app.UseRouting();
-
-            app.MapControllers();
-
-            app.Run();
         }
     }
 }

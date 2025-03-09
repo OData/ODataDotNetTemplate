@@ -23,11 +23,11 @@ builder.Services.AddControllers().AddOData(opt =>
         defaultBatchHandler.MessageQuotas.MaxReceivedMessageSize = 100;
 
         opt.AddRouteComponents(
-                routePrefix: "odata",
-                model: EdmModelBuilder.GetEdmModel(),
-                batchHandler: defaultBatchHandler)
+            routePrefix: "odata",
+            model: EdmModelBuilder.GetEdmModel(),
+            batchHandler: defaultBatchHandler)
 #else
-        opt.AddRouteComponents("odata", EdmModelBuilder.GetEdmModel())
+    opt.AddRouteComponents("odata", EdmModelBuilder.GetEdmModel())
 #endif
 #if (IsQueryOptionAll)
            .EnableQueryFeatures(100);
@@ -47,7 +47,7 @@ builder.Services.AddControllers().AddOData(opt =>
 #if (IsQueryOptionCount)
            .Count()
 #endif
-           .SetMaxTop(100);
+       .SetMaxTop(100);
 #endif
 
 #if (EnableCaseInsensitive)
@@ -55,15 +55,23 @@ builder.Services.AddControllers().AddOData(opt =>
         opt.RouteOptions.EnableActionNameCaseInsensitive = true;
         opt.RouteOptions.EnablePropertyNameCaseInsensitive = true;
 #endif
-        opt.RouteOptions.EnableNonParenthesisForEmptyParameterFunction = true;
+    opt.RouteOptions.EnableNonParenthesisForEmptyParameterFunction = true;
 #if (!EnableNoDollarQueryOptions)
-        opt.EnableNoDollarQueryOptions = false;
+    opt.EnableNoDollarQueryOptions = false;
 #endif
 });
 
 #if (EnableOpenAPI)
-// Learn more about configuring OpenAPI at https://github.com/OData/AspNetCoreOData/tree/main/sample/ODataRoutingSample
+// Learn more about configuring Swagger/OpenAPI at https://github.com/OData/AspNetCoreOData/tree/main/sample/ODataRoutingSample
+#if (IsNet6Or8)
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "ODataWebApi.WebApplication1", Version = "v1" });
+});
+#else
 builder.Services.AddOpenApi();
+#endif
 #endif
 
 var app = builder.Build();
@@ -80,7 +88,12 @@ if (app.Environment.IsDevelopment())
 {
     app.UseODataRouteDebug();
 #if (EnableOpenAPI)
+#if (IsNet6Or8)
+    app.UseSwagger();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ODataWebApi.WebApplication1 V1"));
+#else
     app.MapOpenApi();
+#endif
 #endif
 }
 

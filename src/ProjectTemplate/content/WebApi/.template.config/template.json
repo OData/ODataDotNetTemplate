@@ -12,9 +12,7 @@
   "name": "OData ASP.NET Core Web Api Template",
   "generatorVersions": "[1.0.0.0-*)",
   "description": "A project template for creating a RESTful Web API using AspNetCore OData controllers, with optional support for OpenAPI and other OData settings like System Query Options and OData Batching.",
-  "groupIdentity": "Microsoft.AspNetCoreOData.WebApiTemplate",
-  "precedence": "90",
-  "identity": "Microsoft.AspNetCoreOData.WebApiTemplate.9.0",
+  "identity": "Microsoft.AspNetCoreOData.WebApiTemplate",
   "shortName": "odata-webapi",
   "tags": {
     "language": "C#",
@@ -30,12 +28,20 @@
       "datatype": "choice",
       "choices": [
         {
+          "choice": "net6.0",
+          "description": "Target net6.0"
+        },
+        {
+          "choice": "net8.0",
+          "description": "Target net8.0"
+        },
+        {
           "choice": "net9.0",
           "description": "Target net9.0"
         }
       ],
       "defaultValue": "net9.0",
-      "replaces": "net9.0"
+      "replaces": "${TARGET_FRAMEWORK}"
     },
     "ODataQueryOptions": {
       "type": "parameter",
@@ -236,6 +242,15 @@
       "datatype": "bool",
       "description": "If specified, skips the automatic restore of the project on create.",
       "defaultValue": "false"
+    },
+    "IsNet6Or8": {
+      "type": "generated",
+      "generator": "regexMatch",
+      "datatype": "bool",
+      "parameters": {
+        "pattern": "^(net6.0|net8.0)$",
+        "source": "Framework"
+      }
     },
     "HostIdentifier": {
       "type": "bind",
