@@ -135,7 +135,8 @@ foreach ($propertyGroup in $versions.Project.PropertyGroup) {
         $propertyGroup.VersionReleaseNumber.InnerText = '1'
       } else {
         $currentVersionRelease = [int]$propertyGroup.VersionReleaseNumber.'#text'
-        $propertyGroup.VersionReleaseNumber.InnerText = [string]($currentVersionRelease + 1)
+        $currentVersionRelease = $currentVersionRelease + 1
+        $propertyGroup.VersionReleaseNumber.InnerText = [string]($currentVersionRelease)
       }
       Write-Host "Setting the VersionReleaseNumber in $versionPath to $versionReleaseNumber"
     } else {
@@ -145,9 +146,10 @@ foreach ($propertyGroup in $versions.Project.PropertyGroup) {
     break
   }
 
-  if($null -ne $propertyGroup.VersionRelease) {
+  if ($propertyGroup.VersionRelease.'#text') {
     $currentVersionRelease = [int]$propertyGroup.VersionReleaseNumber.'#text'
-    $propertyGroup.VersionReleaseNumber.InnerText = [string]($currentVersionRelease + 1)
+    $currentVersionRelease = $currentVersionRelease + 1
+    $propertyGroup.VersionReleaseNumber.InnerText = [string]($currentVersionRelease)
     Write-Host "Incrementing the VersionReleaseNumber in $versionPath to $currentVersionRelease"
     break
   }

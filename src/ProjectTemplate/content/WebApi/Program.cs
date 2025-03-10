@@ -63,13 +63,14 @@ builder.Services.AddControllers().AddOData(opt =>
 
 #if (EnableOpenAPI)
 // Learn more about configuring Swagger/OpenAPI at https://github.com/OData/AspNetCoreOData/tree/main/sample/ODataRoutingSample
-#if (IsNet6Or8)
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "ODataWebApi.WebApplication1", Version = "v1" });
 });
-#else
+#if (!IsNet6Or8)
+
+// OpenAPI
 builder.Services.AddOpenApi();
 #endif
 #endif
@@ -88,10 +89,11 @@ if (app.Environment.IsDevelopment())
 {
     app.UseODataRouteDebug();
 #if (EnableOpenAPI)
-#if (IsNet6Or8)
     app.UseSwagger();
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ODataWebApi.WebApplication1 V1"));
-#else
+#if (!IsNet6Or8)
+
+    // OpenAPI
     app.MapOpenApi();
 #endif
 #endif

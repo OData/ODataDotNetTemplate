@@ -100,7 +100,7 @@ dotnet new odata-webapi -n MyODataService.API1 --framework net9.0
 #### Enable OData Batching and with all Query-Options
 
 ```bash
-dotnet new odata-webapi -n MyODataService.API2 --configureHttps true --enable-batching true
+dotnet new odata-webapi -n MyODataService.API2 --configurehttps true --enable-batching true
 ```
 
 #### Enable a few Query-Options
@@ -112,7 +112,13 @@ dotnet new odata-webapi -n MyODataService.API4 --query-option filter select expa
 #### Enable OpenAPI/Swagger
 
 ```bash
-dotnet new odata-webapi -n MyODataService.API5 --framework net9.0 --enable-openapi true
+dotnet new odata-webapi -n MyODataService.API5 --enable-openapi true
+
+# or
+dotnet new odata-webapi -n MyODataService.API6 -f net9.0 --enable-openapi true
+
+# or
+dotnet new odata-webapi -n MyODataService.API7 -f net9.0 --enable-openapi true
 ```
 
 ### 3. Run the Project

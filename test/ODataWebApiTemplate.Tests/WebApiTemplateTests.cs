@@ -41,7 +41,7 @@ public class WebApiTemplateTests : IClassFixture<ProjectFactoryFixture>
     [Theory]
     [InlineData(true, "net9.0")]
     [InlineData(false, "net9.0")]
-    public async Task GenerateAspNetCoreODataWebApi_With_DefaultOptions_VerifyOpenAPI(bool enableOpenApiOrSwagger, string framework)
+    public async Task GenerateAspNetCoreODataWebApi_With_DefaultOptions_VerifyOpenAPIAndSwagger(bool enableOpenApiOrSwagger, string framework)
     {
         // Arrange
         var args = new[] { $"--enable-openapi {enableOpenApiOrSwagger}", $"-f {framework}" };
@@ -76,10 +76,12 @@ public class WebApiTemplateTests : IClassFixture<ProjectFactoryFixture>
             if (enableOpenApiOrSwagger)
             {
                 await aspNetProcess.AssertOk("openapi/v1.json");
+                await aspNetProcess.AssertOk("swagger");
             }
             else
             {
                 await aspNetProcess.AssertNotFound("openapi/v1.json");
+                await aspNetProcess.AssertNotFound("swagger");
             }
         }
     }
@@ -430,6 +432,10 @@ public class WebApiTemplateTests : IClassFixture<ProjectFactoryFixture>
         }
     }
 
+    #endregion
+
+    #region  Tests generating an ASP.NET Core OData Web API project with or without Program.Main and verifies its functionality.
+
     [Theory]
     [InlineData(true, "net6.0")]
     [InlineData(true, "net8.0")]
@@ -454,6 +460,40 @@ public class WebApiTemplateTests : IClassFixture<ProjectFactoryFixture>
                 ErrorMessages.GetFailedProcessMessageOrEmpty("Run built project", project, aspNetProcess.Process));
 
             // GET
+            await aspNetProcess.AssertOk("odata");
+            await aspNetProcess.AssertOk("odata/$metadata");
+        }
+    }
+
+    [Theory]
+    [InlineData(true, "net6.0", false)]
+    [InlineData(true, "net8.0", false)]
+    [InlineData(true, "net9.0", true)]
+    [InlineData(false, "net6.0", false)]
+    [InlineData(false, "net8.0", false)]
+    [InlineData(false, "net9.0", true)]
+    public async Task GenerateAspNetCoreODataWebApi_With_UseProgramMainOrNot_VerifySwaggerOrOpenApi(bool useProgramMain, string framework, bool openApiJsonExists)
+    {
+        // Arrange
+        var args = new[] { $"--use-program-main {useProgramMain}", $"-f {framework}", "--enable-openapi True" };
+        var project = await FactoryFixture.CreateProject(Output);
+
+        // Act & Assert
+        await project.RunDotNetNewAsync("odata-webapi", args: args);
+        await project.VerifyLaunchSettings(new[] { "http", "https" });
+        await project.RunDotNetBuildAsync();
+        using (var aspNetProcess = project.StartBuiltProjectAsync(true, framework, _logger))
+        {
+            Assert.False(
+                aspNetProcess.Process.HasExited,
+                ErrorMessages.GetFailedProcessMessageOrEmpty("Run built project", project, aspNetProcess.Process));
+
+            if(openApiJsonExists)
+            {
+                await aspNetProcess.AssertOk("openapi/v1.json");
+            }
+            
+            await aspNetProcess.AssertOk("swagger");
             await aspNetProcess.AssertOk("odata");
             await aspNetProcess.AssertOk("odata/$metadata");
         }
