@@ -28,20 +28,20 @@
   Show help.
 
 .EXAMPLE
-  Increment the minor version number in the Versions.Settings.targets file
-  .\IncrementVersion.ps1 -versionPath .\Versions.Settings.targets -lastReleaseCommit 123456
+  Increment the minor version number in the Directory.Build.targets file
+  .\IncrementVersion.ps1 -versionPath .\Directory.Build.targets -lastReleaseCommit 123456
 
 .EXAMPLE
-  Increment the minor version number in the Versions.Settings.targets file
-  .\IncrementVersion.ps1 -versionPath .\Versions.Settings.targets -forceMinorIncrement
+  Increment the minor version number in the Directory.Build.targets file
+  .\IncrementVersion.ps1 -versionPath .\Directory.Build.targets -forceMinorIncrement
 
 .EXAMPLE
-  Increment the major version number in the Versions.Settings.targets file
-  .\IncrementVersion.ps1 -versionPath .\Versions.Settings.targets -forceMajorIncrement
+  Increment the major version number in the Directory.Build.targets file
+  .\IncrementVersion.ps1 -versionPath .\Directory.Build.targets -forceMajorIncrement
 
 .EXAMPLE
-  Set the version release number in the Versions.Settings.targets file
-  .\IncrementVersion.ps1 -versionPath .\Versions.Settings.targets -versionRelease preview
+  Set the version release number in the Directory.Build.targets file
+  .\IncrementVersion.ps1 -versionPath .\Directory.Build.targets -versionRelease preview
 #>
 
 Param(
@@ -61,7 +61,7 @@ if ($Help) {
 
 # Set default version path if not provided
 if ($versionPath -eq "") {
-  $versionPath = "$PSScriptRoot\Versions.Settings.targets"
+  $versionPath = "$PSScriptRoot\Directory.Build.targets"
 }
 
 # Get the last release commit ID if not provided
@@ -142,6 +142,13 @@ foreach ($propertyGroup in $versions.Project.PropertyGroup) {
       $propertyGroup.VersionRelease.InnerText = $versionRelease
       $propertyGroup.VersionReleaseNumber.InnerText = '1'
     }
+    break
+  }
+
+  if($null -ne $propertyGroup.VersionRelease) {
+    $currentVersionRelease = [int]$propertyGroup.VersionReleaseNumber.'#text'
+    $propertyGroup.VersionReleaseNumber.InnerText = [string]($currentVersionRelease + 1)
+    Write-Host "Incrementing the VersionReleaseNumber in $versionPath to $currentVersionRelease"
     break
   }
 

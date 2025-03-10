@@ -43,7 +43,7 @@ public class Project : IDisposable
     public string? ProjectArguments { get; set; }
     public string? ProjectGuid { get; set; }
     public string? TemplateOutputDir { get; set; }
-    public string? TargetFramework { get; set; } = GetAssemblyMetadata("Test.DefaultTargetFramework");
+    public string? TargetFramework { get; set; }
     public string? RuntimeIdentifier { get; set; } = string.Empty;
 
     /// <summary>
@@ -148,10 +148,14 @@ public class Project : IDisposable
     /// Starts the built project as an ASP.NET Core application.
     /// </summary>
     /// <param name="hasListeningUri">Indicates whether the application has a listening URI.</param>
+    /// <param name="targetFramework">Target Framework like net6.0, net8.0.</param>
     /// <param name="logger">Optional logger for the application.</param>
     /// <returns>An <see cref="AspNetProcess"/> representing the running application.</returns>
-    internal AspNetProcess StartBuiltProjectAsync(bool hasListeningUri = true, ILogger? logger = null)
+    internal AspNetProcess StartBuiltProjectAsync(bool hasListeningUri = true, string? targetFramework = null, ILogger? logger = null)
     {
+        TargetFramework = targetFramework;
+        Assert.NotNull(TargetFramework);
+
         var environment = new Dictionary<string, string>
         {
             ["ASPNETCORE_URLS"] = _urlNoHttps,

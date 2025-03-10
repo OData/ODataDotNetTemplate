@@ -3,14 +3,9 @@ using System.Linq;
 using System.Xml.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Deltas;
-
-#if (ODataVersion7x)
-using Microsoft.AspNet.OData;
-#else
 using Microsoft.AspNetCore.OData.Formatter;
 using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
-#endif
 using Microsoft.Extensions.Logging;
 using ODataWebApi.WebApplication1.Models;
 

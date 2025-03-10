@@ -1,10 +1,6 @@
 using Microsoft.OData.Edm;
-#if(ODataVersion7x)
-using Microsoft.AspNet.OData.Builder;
-#else
 using Microsoft.OData.ModelBuilder;
 using ODataWebApi.WebApplication1.Models;
-#endif
 
 namespace ODataWebApi.WebApplication1
 {

@@ -36,17 +36,15 @@ public class WebApiTemplateTests : IClassFixture<ProjectFactoryFixture>
         }
     }
 
-    private const string Framework = "net9.0";
-
     #region Tests generating an ASP.NET Core OData Web API project with default options and verifies its functionality.
 
     [Theory]
-    [InlineData(true)]
-    [InlineData(false)]
-    public async Task GenerateAspNetCoreODataWebApi_With_DefaultOptions(bool enableOpenApiOrSwagger)
+    [InlineData(true, "net9.0")]
+    [InlineData(false, "net9.0")]
+    public async Task GenerateAspNetCoreODataWebApi_With_DefaultOptions_VerifyOpenAPI(bool enableOpenApiOrSwagger, string framework)
     {
         // Arrange
-        var args = new[] { $"--enable-openapi {enableOpenApiOrSwagger}" };
+        var args = new[] { $"--enable-openapi {enableOpenApiOrSwagger}", $"-f {framework}" };
         var project = await FactoryFixture.CreateProject(Output);
 
         // Act & Assert
@@ -54,7 +52,7 @@ public class WebApiTemplateTests : IClassFixture<ProjectFactoryFixture>
         await project.VerifyLaunchSettings(new[] { "http", "https" });
         await project.RunDotNetBuildAsync();
 
-        using (var aspNetProcess = project.StartBuiltProjectAsync(true, _logger))
+        using (var aspNetProcess = project.StartBuiltProjectAsync(true, framework, _logger))
         {
             Assert.False(
                 aspNetProcess.Process.HasExited,
@@ -86,22 +84,74 @@ public class WebApiTemplateTests : IClassFixture<ProjectFactoryFixture>
         }
     }
 
+    [Theory]
+    [InlineData(true, "net6.0")]
+    [InlineData(true, "net8.0")]
+    [InlineData(false, "net6.0")]
+    [InlineData(false, "net8.0")]
+    public async Task GenerateAspNetCoreODataWebApi_With_DefaultOptions_VerifySwagger(bool enableOpenApiOrSwagger, string framework)
+    {
+        // Arrange
+        var args = new[] { $"--enable-openapi {enableOpenApiOrSwagger}", $"-f {framework}" };
+        var project = await FactoryFixture.CreateProject(Output);
+
+        // Act & Assert
+        await project.RunDotNetNewAsync("odata-webapi", args: args);
+        await project.VerifyLaunchSettings(new[] { "http", "https" });
+        await project.RunDotNetBuildAsync();
+
+        using (var aspNetProcess = project.StartBuiltProjectAsync(true, framework, _logger))
+        {
+            Assert.False(
+                aspNetProcess.Process.HasExited,
+                ErrorMessages.GetFailedProcessMessageOrEmpty("Run built project", project, aspNetProcess.Process));
+
+            // GET
+            await aspNetProcess.AssertOk("odata");
+            await aspNetProcess.AssertOk("odata/$metadata");
+            await aspNetProcess.AssertOk("odata/Customers/GetCustomerByName(name='Customer1')");
+            await aspNetProcess.AssertOk("odata/Customers(1)/GetCustomerOrdersTotalAmount");
+            await aspNetProcess.AssertOk("odata/Customers?$Expand=Orders");
+            await aspNetProcess.AssertOk("odata/customers?$filter=Type eq 'Premium'");
+            await aspNetProcess.AssertOk("odata/Customers?$Expand=Orders($Select=Amount)");
+            await aspNetProcess.AssertOk("odata/Customers?$Expand=Orders&$Select=Orders");
+            await aspNetProcess.AssertOk("odata/Customers?$OrderBy=Name desc");
+
+            // BATCH
+            await aspNetProcess.AssertNotFound("odata/$batch");
+
+            // swagger
+            if (enableOpenApiOrSwagger)
+            {
+                await aspNetProcess.AssertOk("swagger");
+            }
+            else
+            {
+                await aspNetProcess.AssertNotFound("swagger");
+            }
+        }
+    }
+
     #endregion
 
     #region Tests generating an ASP.NET Core OData Web API project with default options and verifies POST requests.
 
-    [Fact]
-    public async Task GenerateAspNetCoreODataWebApi_TestPost()
+    [Theory]
+    [InlineData("net6.0")]
+    [InlineData("net8.0")]
+    [InlineData("net9.0")]
+    public async Task GenerateAspNetCoreODataWebApi_TestPost(string framework)
     {
         // Arrange
+        var args = new[] { $"-f {framework}" };
         var project = await FactoryFixture.CreateProject(Output);
 
         // Act & Assert
-        await project.RunDotNetNewAsync("odata-webapi");
+        await project.RunDotNetNewAsync("odata-webapi", args: args);
         await project.VerifyLaunchSettings(new[] { "http", "https" });
         await project.RunDotNetBuildAsync();
 
-        using (var aspNetProcess = project.StartBuiltProjectAsync(true, _logger))
+        using (var aspNetProcess = project.StartBuiltProjectAsync(true, framework, _logger))
         {
             Assert.False(
                 aspNetProcess.Process.HasExited,
@@ -124,18 +174,22 @@ public class WebApiTemplateTests : IClassFixture<ProjectFactoryFixture>
 
     #region Tests generating an ASP.NET Core OData Web API project with default options and verifies PATCH requests.
 
-    [Fact]
-    public async Task GenerateAspNetCoreODataWebApi_TestDataPatch()
+    [Theory]
+    [InlineData("net6.0")]
+    [InlineData("net8.0")]
+    [InlineData("net9.0")]
+    public async Task GenerateAspNetCoreODataWebApi_TestDataPatch(string framework)
     {
         // Arrange
+        var args = new[] { $"-f {framework}" };
         var project = await FactoryFixture.CreateProject(Output);
 
         // Act & Assert
-        await project.RunDotNetNewAsync("odata-webapi");
+        await project.RunDotNetNewAsync("odata-webapi", args: args);
         await project.VerifyLaunchSettings(new[] { "http", "https" });
         await project.RunDotNetBuildAsync();
 
-        using (var aspNetProcess = project.StartBuiltProjectAsync(true, _logger))
+        using (var aspNetProcess = project.StartBuiltProjectAsync(true, framework, _logger))
         {
             Assert.False(
                 aspNetProcess.Process.HasExited,
@@ -158,11 +212,14 @@ public class WebApiTemplateTests : IClassFixture<ProjectFactoryFixture>
 
     #region Tests generating an ASP.NET Core OData Web API project with OData batching enabled and verifies its functionality.
 
-    [Fact]
-    public async Task GenerateAspNetCoreODataWebApi_With_ODataBatchingEnabled()
+    [Theory]
+    [InlineData("net6.0")]
+    [InlineData("net8.0")]
+    [InlineData("net9.0")]
+    public async Task GenerateAspNetCoreODataWebApi_With_ODataBatchingEnabled(string framework)
     {
         // Arrange
-        var args = new[] { "--enable-batching True" };
+        var args = new[] { "--enable-batching True", $"-f {framework}" };
 
         var project = await FactoryFixture.CreateProject(Output);
 
@@ -171,9 +228,9 @@ public class WebApiTemplateTests : IClassFixture<ProjectFactoryFixture>
         await project.VerifyLaunchSettings(new[] { "http", "https" });
         await project.RunDotNetBuildAsync();
 
-        await project.VerifyHasProperty("TargetFramework", Framework);
+        await project.VerifyHasProperty("TargetFramework", framework);
 
-        using (var aspNetProcess = project.StartBuiltProjectAsync(true, _logger))
+        using (var aspNetProcess = project.StartBuiltProjectAsync(true, framework, _logger))
         {
             Assert.False(
                 aspNetProcess.Process.HasExited,
@@ -237,22 +294,22 @@ public class WebApiTemplateTests : IClassFixture<ProjectFactoryFixture>
     #region Tests generating an ASP.NET Core OData Web API project with case-insensitive options enabled, and verifies its functionality.
 
     [Theory]
-    [InlineData(true, "expand=orders")]
-    [InlineData(true, "expand=Orders")]
-    [InlineData(false, "expand=Orders")]
-    [InlineData(true, "expand=Orders(Select=amount)")]
-    [InlineData(true, "expand=orders(Select=Amount)")]
-    [InlineData(false, "Expand=Orders(Select=Amount)")]
-    [InlineData(true, "orderBy=name desc")]
-    [InlineData(true, "orderBy=Name desc")]
-    [InlineData(false, "orderBy=Name desc")]
-    [InlineData(true, "filter=type eq 'Premium'")]
-    [InlineData(true, "filter=Type eq 'Premium'")]
-    [InlineData(false, "filter=Type eq 'Premium'")]
-    public async Task GenerateAspNetCoreODataWebApi_With_CaseInsensitive(bool caseInsensitive, string query)
+    [InlineData(true, "expand=orders", "net6.0")]
+    [InlineData(true, "expand=Orders", "net8.0")]
+    [InlineData(false, "expand=Orders", "net9.0")]
+    [InlineData(true, "expand=Orders(Select=amount)", "net6.0")]
+    [InlineData(true, "expand=orders(Select=Amount)", "net8.0")]
+    [InlineData(false, "Expand=Orders(Select=Amount)", "net9.0")]
+    [InlineData(true, "orderBy=name desc", "net6.0")]
+    [InlineData(true, "orderBy=Name desc", "net8.0")]
+    [InlineData(false, "orderBy=Name desc", "net9.0")]
+    [InlineData(true, "filter=type eq 'Premium'", "net6.0")]
+    [InlineData(true, "filter=Type eq 'Premium'", "net8.0")]
+    [InlineData(false, "filter=Type eq 'Premium'", "net9.0")]
+    public async Task GenerateAspNetCoreODataWebApi_With_CaseInsensitive(bool caseInsensitive, string query, string framework)
     {
         // Arrange
-        var args = new[] { $"--case-insensitive {caseInsensitive}" };
+        var args = new[] { $"--case-insensitive {caseInsensitive}", $"-f {framework}" };
 
         var project = await FactoryFixture.CreateProject(Output);
 
@@ -261,7 +318,7 @@ public class WebApiTemplateTests : IClassFixture<ProjectFactoryFixture>
         await project.VerifyLaunchSettings(new[] { "http", "https" });
         await project.RunDotNetBuildAsync();
 
-        using (var aspNetProcess = project.StartBuiltProjectAsync(true, _logger))
+        using (var aspNetProcess = project.StartBuiltProjectAsync(true, framework, _logger))
         {
             Assert.False(
                 aspNetProcess.Process.HasExited,
@@ -279,16 +336,16 @@ public class WebApiTemplateTests : IClassFixture<ProjectFactoryFixture>
     #region Tests generating an ASP.NET Core OData Web API project with or without dollar sign on query options and verifies its functionality.
 
     [Theory]
-    [InlineData(true, "expand=Orders")]
-    [InlineData(false, "$expand=Orders")]
-    [InlineData(true, "expand=Orders&select=Orders")]
-    [InlineData(false, "$expand=Orders&$select=Orders")]
-    [InlineData(true, "orderBy=Name desc")]
-    [InlineData(false, "$orderBy=Name desc")]
-    public async Task GenerateAspNetCoreODataWebApi_WithOrWithoutDollarOnQueryOptions(bool withOrWithoutDollar, string query)
+    [InlineData(true, "expand=Orders", "net6.0")]
+    [InlineData(false, "$expand=Orders", "net8.0")]
+    [InlineData(true, "expand=Orders&select=Orders", "net9.0")]
+    [InlineData(false, "$expand=Orders&$select=Orders", "net6.0")]
+    [InlineData(true, "orderBy=Name desc", "net8.0")]
+    [InlineData(false, "$orderBy=Name desc", "net9.0")]
+    public async Task GenerateAspNetCoreODataWebApi_WithOrWithoutDollarOnQueryOptions(bool withOrWithoutDollar, string query, string framework)
     {
         // Arrange
-        var args = new[] { $"--no-dollar {withOrWithoutDollar}" };
+        var args = new[] { $"--no-dollar {withOrWithoutDollar}", $"-f {framework}" };
 
         var project = await FactoryFixture.CreateProject(Output);
 
@@ -297,7 +354,7 @@ public class WebApiTemplateTests : IClassFixture<ProjectFactoryFixture>
         await project.VerifyLaunchSettings(new[] { "http", "https" });
         await project.RunDotNetBuildAsync();
 
-        using (var aspNetProcess = project.StartBuiltProjectAsync(true, _logger))
+        using (var aspNetProcess = project.StartBuiltProjectAsync(true, framework, _logger))
         {
             Assert.False(
                 aspNetProcess.Process.HasExited,
@@ -315,30 +372,32 @@ public class WebApiTemplateTests : IClassFixture<ProjectFactoryFixture>
     #region Tests generating an ASP.NET Core OData Web API project with selected query options and verifies its functionality.
 
     [Theory]
-    [InlineData("expand", "$expand=Orders", "$filter=Type eq 'Premium'")]
-    [InlineData("expand", "$expand=Orders", "$orderBy=Name desc")]
-    [InlineData("expand", "$expand=Orders", "$count=true" )]
-    [InlineData("expand", "$expand=Orders", "odata/$batch" )]
-    [InlineData("filter", "$filter=Type eq 'Premium'", "$expand=Orders" )]
-    [InlineData("filter", "$filter=Type eq 'Premium'", "$orderBy=Name desc" )]
-    [InlineData("filter", "$filter=Type eq 'Premium'", "$count=true" )]
-    [InlineData("expand select", "$expand=Orders($select=Amount)", "$count=true" )]
-    [InlineData("expand select", "$expand=Orders($select=Amount)", "$orderBy=Name desc")]
-    [InlineData("expand select", "$expand=Orders($select=Amount)", "$filter=Type eq 'Premium'")]
-    [InlineData("expand select", "$expand=Orders&$select=Orders", "$filter=Type eq 'Premium'")]
-    [InlineData("expand select", "$expand=Orders&$select=Orders", "$orderBy=Name desc")]
-    [InlineData("orderby", "$orderBy=Name desc", "$expand=Orders")]
-    [InlineData("orderby", "$orderBy=Type", "$filter=Type eq 'Premium'" )]
-    [InlineData("orderby", "$orderBy=Name desc", "$Count=true")]
-    [InlineData("count", "$count=true", "$orderBy=Name desc")]
-    [InlineData("count", "$count=true", "$expand=Orders($select=Amount)")]
-    [InlineData("count", "$count=true", "$filter=Type eq 'Premium'")]
-    [InlineData("expand filter count orderby select", "$count=true&$expand=Orders&$filter=Type eq 'Premium'&$select=Type", "odata/$batch")]
-
-    public async Task GenerateAspNetCoreODataWebApi_With_SelectedQueryOptions(string queryOptions, string query, string notFoundOrBadRequestQuery)
+    [InlineData("expand", "$expand=Orders", "$filter=Type eq 'Premium'", "net6.0")]
+    [InlineData("expand", "$expand=Orders", "$orderBy=Name desc", "net8.0")]
+    [InlineData("expand", "$expand=Orders", "$count=true", "net9.0")]
+    [InlineData("expand", "$expand=Orders", "odata/$batch", "net6.0")]
+    [InlineData("filter", "$filter=Type eq 'Premium'", "$expand=Orders", "net8.0")]
+    [InlineData("filter", "$filter=Type eq 'Premium'", "$orderBy=Name desc", "net9.0")]
+    [InlineData("filter", "$filter=Type eq 'Premium'", "$count=true", "net6.0")]
+    [InlineData("expand select", "$expand=Orders($select=Amount)", "$count=true", "net8.0")]
+    [InlineData("expand select", "$expand=Orders($select=Amount)", "$orderBy=Name desc", "net9.0")]
+    [InlineData("expand select", "$expand=Orders($select=Amount)", "$filter=Type eq 'Premium'", "net6.0")]
+    [InlineData("expand select", "$expand=Orders&$select=Orders", "$filter=Type eq 'Premium'", "net8.0")]
+    [InlineData("expand select", "$expand=Orders&$select=Orders", "$filter=Type eq 'Premium'", "net9.0")]
+    [InlineData("expand select", "$expand=Orders&$select=Orders", "$orderBy=Name desc", "net9.0")]
+    [InlineData("orderby", "$orderBy=Name desc", "$expand=Orders", "net6.0")]
+    [InlineData("orderby", "$orderBy=Type", "$filter=Type eq 'Premium'", "net8.0")]
+    [InlineData("orderby", "$orderBy=Name desc", "$Count=true", "net9.0")]
+    [InlineData("count", "$count=true", "$orderBy=Name desc", "net6.0")]
+    [InlineData("count", "$count=true", "$expand=Orders($select=Amount)", "net8.0")]
+    [InlineData("count", "$count=true", "$filter=Type eq 'Premium'", "net9.0")]
+    [InlineData("expand filter count orderby select", "$count=true&$expand=Orders&$filter=Type eq 'Premium'&$select=Type", "odata/$batch", "net6.0")]
+    [InlineData("expand filter count orderby select", "$count=true&$expand=Orders&$filter=Type eq 'Premium'&$select=Type", "odata/$batch", "net8.0")]
+    [InlineData("expand filter count orderby select", "$count=true&$expand=Orders&$filter=Type eq 'Premium'&$select=Type", "odata/$batch", "net9.0")]
+    public async Task GenerateAspNetCoreODataWebApi_With_SelectedQueryOptions(string queryOptions, string query, string notFoundOrBadRequestQuery, string framework)
     {
         // Arrange
-        var args = new[] { $"--query-option {queryOptions}", "--configurehttps False" };
+        var args = new[] { $"--query-option {queryOptions}", "--configurehttps False", $"-f {framework}" };
 
         var project = await FactoryFixture.CreateProject(Output);
 
@@ -347,9 +406,9 @@ public class WebApiTemplateTests : IClassFixture<ProjectFactoryFixture>
         await project.VerifyLaunchSettings(new[] { "http" });
         await project.RunDotNetBuildAsync();
 
-        await project.VerifyHasProperty("TargetFramework", Framework);
+        await project.VerifyHasProperty("TargetFramework", framework);
 
-        using (var aspNetProcess = project.StartBuiltProjectAsync(true, _logger))
+        using (var aspNetProcess = project.StartBuiltProjectAsync(true, framework, _logger))
         {
             Assert.False(
                 aspNetProcess.Process.HasExited,
@@ -368,6 +427,35 @@ public class WebApiTemplateTests : IClassFixture<ProjectFactoryFixture>
             {
                 await aspNetProcess.AssertBadRequest("odata/Customers?" + notFoundOrBadRequestQuery);
             }
+        }
+    }
+
+    [Theory]
+    [InlineData(true, "net6.0")]
+    [InlineData(true, "net8.0")]
+    [InlineData(true, "net9.0")]
+    [InlineData(false, "net6.0")]
+    [InlineData(false, "net8.0")]
+    [InlineData(false, "net9.0")]
+    public async Task GenerateAspNetCoreODataWebApi_With_UseProgramMainOrNot(bool useProgramMain, string framework)
+    {
+        // Arrange
+        var args = new[] { $"--use-program-main {useProgramMain}", $"-f {framework}" };
+        var project = await FactoryFixture.CreateProject(Output);
+
+        // Act & Assert
+        await project.RunDotNetNewAsync("odata-webapi", args: args);
+        await project.VerifyLaunchSettings(new[] { "http", "https" });
+        await project.RunDotNetBuildAsync();
+        using (var aspNetProcess = project.StartBuiltProjectAsync(true, framework, _logger))
+        {
+            Assert.False(
+                aspNetProcess.Process.HasExited,
+                ErrorMessages.GetFailedProcessMessageOrEmpty("Run built project", project, aspNetProcess.Process));
+
+            // GET
+            await aspNetProcess.AssertOk("odata");
+            await aspNetProcess.AssertOk("odata/$metadata");
         }
     }
 

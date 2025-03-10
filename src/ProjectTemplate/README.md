@@ -16,13 +16,13 @@ Follow these steps to use the template locally:
 Install the template using the dotnet new command:
 
 ```bash
-dotnet new install Microsoft.AspNetCoreOData.WebApiTemplate.9.0
+dotnet new install Microsoft.AspNetCoreOData.WebApiTemplate
 ```
 
 To specify the PackageVersion explicitly:
 
 ```bash
-dotnet new install Microsoft.AspNetCoreOData.WebApiTemplate.9.0::<PackageVersion>
+dotnet new install Microsoft.AspNetCoreOData.WebApiTemplate::<PackageVersion>
 ```
 
 ### 2. Create a New Project Using the Template
@@ -50,8 +50,10 @@ Options:
   --type <project>        Specifies the template type to instantiate.
 
 Template options:
-  -f, --framework <net9.0>                                  The target framework for the project.
+  -f, --framework <net6.0|net8.0|net9.0>                    The target framework for the project.
                                                             Type: choice
+                                                              net6.0  Target net6.0
+                                                              net8.0  Target net8.0
                                                               net9.0  Target net9.0
                                                             Default: net9.0
   -qo, --query-option <count|expand|filter|orderby|select>  OData System Query Options.
@@ -66,7 +68,7 @@ Template options:
   --no-dollar                                               Whether or not the OData system query options should be prefixed with '$'
                                                             Type: bool
                                                             Default: true
-  -ci, --case-insensitive                                   Enable case insensitive for the controller/action property name in conventional routing
+  -ci, --case-insensitive                                   Enable case insensitive for the controller/action/property name in conventional routing
                                                             Type: bool
                                                             Default: true
   --enable-batching                                         Allowing OData batching
@@ -127,7 +129,7 @@ dotnet run
 Uninstall the template using the dotnet new command:
 
 ```bash
-dotnet new uninstall Microsoft.AspNetCoreOData.WebApiTemplate.9.0
+dotnet new uninstall Microsoft.AspNetCoreOData.WebApiTemplate
 ```
 
 ## Project Structure

@@ -16,7 +16,7 @@ internal static class TemplatePackageInstaller
 {
     private static bool _haveReinstalledTemplatePackages;
 
-    private static readonly string _templatePackage = "Microsoft.AspNetCoreOData.WebApiTemplate.9.0";
+    private static readonly string _templatePackage = "Microsoft.AspNetCoreOData.WebApiTemplate";
 
     /// <summary>
     /// Gets the custom template hive path from the assembly metadata.
