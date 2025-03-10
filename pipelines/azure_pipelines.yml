@@ -53,11 +53,6 @@ extends:
             versionSpec: '>=5.2.0'
             checkLatest: true
         - task: UseDotNet@2
-          displayName: Use .NET Core SDK 6.x
-          inputs:
-            version: 6.x
-            includePreviewVersions: true
-        - task: UseDotNet@2
           displayName: Use .NET Core SDK 8.x
           inputs:
             version: 8.x
