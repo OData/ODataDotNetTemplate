@@ -31,12 +31,7 @@ This project uses MSBuild to automate the build process and generate content fro
 
 #### Files
 
-- **Directory.Build.targets**: [`tools/Directory.Build.targets`](./tools/Directory.Build.targets) contains custom MSBuild targets applied to all projects in the directory and its subdirectories.
-- **GenerateContent.targets**: [`tools/GenerateContent.targets`](./tools/GenerateContent.targets) defines targets for generating content based on templates.
-- **GenerateFileFromTemplate.cs**: [`tools/GenerateFileFromTemplate.cs`](./tools/GenerateFileFromTemplate.cs) implements the `GenerateFileFromTemplate` task. It is responsible for reading template files, applying the specified properties, and generating the output files.
-- **GenerateTemplate.tasks.targets**: [`tools/GenerateTemplate.tasks.targets`](./tools/GenerateTemplate.tasks.targets) imports the `GenerateFileFromTemplate` task and defines necessary targets. It ensures that the task is available for use in the `GenerateContent.targets` file.
-- **Packages.targets**: [`tools/Packages.targets`](./tools/Packages.targets) defines packages used with the template.
-- **Versions.targets**: [`tools/Versions.targets`](./tools/Versions.targets) contains targets for managing version information.
+- **Directory.Build.targets**: [`tools/Directory.Build.targets`](./tools/Directory.Build.targets) contains custom MSBuild targets applied to all projects in the directory and its subdirectories. Also contains targets for managing version information.
 - **Directory.Build.props**: [`Directory.Build.props`](./Directory.Build.props) contains common properties applied to all projects in the directory and its subdirectories.
 
 ### 3. Build Repo
@@ -99,11 +94,6 @@ artifacts/
     *.nupkg        = NuGet packages for nuget.org
 ```
 
-## Branch Strategy
-
-- `main` contains actively developed code not yet released.
-- `release/<target-dotnet-framework>` contains code intended for release, targeting specific .NET framework versions. For example, `release/6.0`, `release/8.0`, `release/9.0`...
-
 ## IncrementVersion.ps1
 
 This script increments the version number in the specified msbuild props file. The version number can be incremented in the following ways:
@@ -123,7 +113,7 @@ This script increments the version number in the specified msbuild props file. T
 
 ### Examples
 
-Increment the minor version number in the Versions.Settings.targets file:
+Increment the minor version number in the `Directory.Build.targets` file:
 
 ## Template Project Structure
 

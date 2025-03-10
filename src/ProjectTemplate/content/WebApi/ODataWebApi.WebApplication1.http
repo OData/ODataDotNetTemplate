@@ -11,7 +11,15 @@
 
 ### Get metadata
 GET {{HostAddress}}/odata/$metadata
-Accept: application/json
+
+### Swagger/OpenAPI
+//#if (EnableOpenAPI)
+//#if (IsNet6Or8)
+GET {{HostAddress}}/swagger/v1/swagger.json
+//#else
+GET {{HostAddress}}/openapi/v1.json
+//#endif
+//#endif
 
 ### Get list of customers
 GET {{HostAddress}}/odata/Customers
