@@ -50,9 +50,8 @@ Options:
   --type <project>        Specifies the template type to instantiate.
 
 Template options:
-  -f, --framework <net6.0|net8.0|net9.0>                    The target framework for the project.
+  -f, --framework <net8.0|net9.0>                           The target framework for the project.
                                                             Type: choice
-                                                              net6.0  Target net6.0
                                                               net8.0  Target net8.0
                                                               net9.0  Target net9.0
                                                             Default: net9.0

@@ -148,7 +148,7 @@ public class Project : IDisposable
     /// Starts the built project as an ASP.NET Core application.
     /// </summary>
     /// <param name="hasListeningUri">Indicates whether the application has a listening URI.</param>
-    /// <param name="targetFramework">Target Framework like net6.0, net8.0.</param>
+    /// <param name="targetFramework">Target Framework like net8.0, net9.0.</param>
     /// <param name="logger">Optional logger for the application.</param>
     /// <returns>An <see cref="AspNetProcess"/> representing the running application.</returns>
     internal AspNetProcess StartBuiltProjectAsync(bool hasListeningUri = true, string? targetFramework = null, ILogger? logger = null)

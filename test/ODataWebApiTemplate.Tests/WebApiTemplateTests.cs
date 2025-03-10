@@ -87,9 +87,7 @@ public class WebApiTemplateTests : IClassFixture<ProjectFactoryFixture>
     }
 
     [Theory]
-    [InlineData(true, "net6.0")]
     [InlineData(true, "net8.0")]
-    [InlineData(false, "net6.0")]
     [InlineData(false, "net8.0")]
     public async Task GenerateAspNetCoreODataWebApi_With_DefaultOptions_VerifySwagger(bool enableOpenApiOrSwagger, string framework)
     {
@@ -139,7 +137,6 @@ public class WebApiTemplateTests : IClassFixture<ProjectFactoryFixture>
     #region Tests generating an ASP.NET Core OData Web API project with default options and verifies POST requests.
 
     [Theory]
-    [InlineData("net6.0")]
     [InlineData("net8.0")]
     [InlineData("net9.0")]
     public async Task GenerateAspNetCoreODataWebApi_TestPost(string framework)
@@ -177,7 +174,6 @@ public class WebApiTemplateTests : IClassFixture<ProjectFactoryFixture>
     #region Tests generating an ASP.NET Core OData Web API project with default options and verifies PATCH requests.
 
     [Theory]
-    [InlineData("net6.0")]
     [InlineData("net8.0")]
     [InlineData("net9.0")]
     public async Task GenerateAspNetCoreODataWebApi_TestDataPatch(string framework)
@@ -215,7 +211,6 @@ public class WebApiTemplateTests : IClassFixture<ProjectFactoryFixture>
     #region Tests generating an ASP.NET Core OData Web API project with OData batching enabled and verifies its functionality.
 
     [Theory]
-    [InlineData("net6.0")]
     [InlineData("net8.0")]
     [InlineData("net9.0")]
     public async Task GenerateAspNetCoreODataWebApi_With_ODataBatchingEnabled(string framework)
@@ -296,16 +291,16 @@ public class WebApiTemplateTests : IClassFixture<ProjectFactoryFixture>
     #region Tests generating an ASP.NET Core OData Web API project with case-insensitive options enabled, and verifies its functionality.
 
     [Theory]
-    [InlineData(true, "expand=orders", "net6.0")]
+    [InlineData(true, "expand=orders", "net8.0")]
     [InlineData(true, "expand=Orders", "net8.0")]
     [InlineData(false, "expand=Orders", "net9.0")]
-    [InlineData(true, "expand=Orders(Select=amount)", "net6.0")]
+    [InlineData(true, "expand=Orders(Select=amount)", "net9.0")]
     [InlineData(true, "expand=orders(Select=Amount)", "net8.0")]
     [InlineData(false, "Expand=Orders(Select=Amount)", "net9.0")]
-    [InlineData(true, "orderBy=name desc", "net6.0")]
+    [InlineData(true, "orderBy=name desc", "net8.0")]
     [InlineData(true, "orderBy=Name desc", "net8.0")]
     [InlineData(false, "orderBy=Name desc", "net9.0")]
-    [InlineData(true, "filter=type eq 'Premium'", "net6.0")]
+    [InlineData(true, "filter=type eq 'Premium'", "net9.0")]
     [InlineData(true, "filter=Type eq 'Premium'", "net8.0")]
     [InlineData(false, "filter=Type eq 'Premium'", "net9.0")]
     public async Task GenerateAspNetCoreODataWebApi_With_CaseInsensitive(bool caseInsensitive, string query, string framework)
@@ -338,10 +333,10 @@ public class WebApiTemplateTests : IClassFixture<ProjectFactoryFixture>
     #region Tests generating an ASP.NET Core OData Web API project with or without dollar sign on query options and verifies its functionality.
 
     [Theory]
-    [InlineData(true, "expand=Orders", "net6.0")]
+    [InlineData(true, "expand=Orders", "net8.0")]
     [InlineData(false, "$expand=Orders", "net8.0")]
     [InlineData(true, "expand=Orders&select=Orders", "net9.0")]
-    [InlineData(false, "$expand=Orders&$select=Orders", "net6.0")]
+    [InlineData(false, "$expand=Orders&$select=Orders", "net9.0")]
     [InlineData(true, "orderBy=Name desc", "net8.0")]
     [InlineData(false, "$orderBy=Name desc", "net9.0")]
     public async Task GenerateAspNetCoreODataWebApi_WithOrWithoutDollarOnQueryOptions(bool withOrWithoutDollar, string query, string framework)
@@ -374,26 +369,29 @@ public class WebApiTemplateTests : IClassFixture<ProjectFactoryFixture>
     #region Tests generating an ASP.NET Core OData Web API project with selected query options and verifies its functionality.
 
     [Theory]
-    [InlineData("expand", "$expand=Orders", "$filter=Type eq 'Premium'", "net6.0")]
+    [InlineData("expand", "$expand=Orders", "$filter=Type eq 'Premium'", "net9.0")]
     [InlineData("expand", "$expand=Orders", "$orderBy=Name desc", "net8.0")]
     [InlineData("expand", "$expand=Orders", "$count=true", "net9.0")]
-    [InlineData("expand", "$expand=Orders", "odata/$batch", "net6.0")]
+    [InlineData("expand", "$expand=Orders", "odata/$batch", "net9.0")]
+    [InlineData("expand", "$expand=Orders", "odata/$batch", "net8.0")]
     [InlineData("filter", "$filter=Type eq 'Premium'", "$expand=Orders", "net8.0")]
     [InlineData("filter", "$filter=Type eq 'Premium'", "$orderBy=Name desc", "net9.0")]
-    [InlineData("filter", "$filter=Type eq 'Premium'", "$count=true", "net6.0")]
+    [InlineData("filter", "$filter=Type eq 'Premium'", "$count=true", "net8.0")]
+    [InlineData("filter", "$filter=Type eq 'Premium'", "$count=true", "net9.0")]
     [InlineData("expand select", "$expand=Orders($select=Amount)", "$count=true", "net8.0")]
     [InlineData("expand select", "$expand=Orders($select=Amount)", "$orderBy=Name desc", "net9.0")]
-    [InlineData("expand select", "$expand=Orders($select=Amount)", "$filter=Type eq 'Premium'", "net6.0")]
+    [InlineData("expand select", "$expand=Orders($select=Amount)", "$filter=Type eq 'Premium'", "net9.0")]
     [InlineData("expand select", "$expand=Orders&$select=Orders", "$filter=Type eq 'Premium'", "net8.0")]
     [InlineData("expand select", "$expand=Orders&$select=Orders", "$filter=Type eq 'Premium'", "net9.0")]
     [InlineData("expand select", "$expand=Orders&$select=Orders", "$orderBy=Name desc", "net9.0")]
-    [InlineData("orderby", "$orderBy=Name desc", "$expand=Orders", "net6.0")]
+    [InlineData("orderby", "$orderBy=Name desc", "$expand=Orders", "net8.0")]
+    [InlineData("orderby", "$orderBy=Name desc", "$expand=Orders", "net9.0")]
     [InlineData("orderby", "$orderBy=Type", "$filter=Type eq 'Premium'", "net8.0")]
     [InlineData("orderby", "$orderBy=Name desc", "$Count=true", "net9.0")]
-    [InlineData("count", "$count=true", "$orderBy=Name desc", "net6.0")]
+    [InlineData("count", "$count=true", "$orderBy=Name desc", "net8.0")]
+    [InlineData("count", "$count=true", "$orderBy=Name desc", "net9.0")]
     [InlineData("count", "$count=true", "$expand=Orders($select=Amount)", "net8.0")]
     [InlineData("count", "$count=true", "$filter=Type eq 'Premium'", "net9.0")]
-    [InlineData("expand filter count orderby select", "$count=true&$expand=Orders&$filter=Type eq 'Premium'&$select=Type", "odata/$batch", "net6.0")]
     [InlineData("expand filter count orderby select", "$count=true&$expand=Orders&$filter=Type eq 'Premium'&$select=Type", "odata/$batch", "net8.0")]
     [InlineData("expand filter count orderby select", "$count=true&$expand=Orders&$filter=Type eq 'Premium'&$select=Type", "odata/$batch", "net9.0")]
     public async Task GenerateAspNetCoreODataWebApi_With_SelectedQueryOptions(string queryOptions, string query, string notFoundOrBadRequestQuery, string framework)
@@ -437,10 +435,8 @@ public class WebApiTemplateTests : IClassFixture<ProjectFactoryFixture>
     #region  Tests generating an ASP.NET Core OData Web API project with or without Program.Main and verifies its functionality.
 
     [Theory]
-    [InlineData(true, "net6.0")]
     [InlineData(true, "net8.0")]
     [InlineData(true, "net9.0")]
-    [InlineData(false, "net6.0")]
     [InlineData(false, "net8.0")]
     [InlineData(false, "net9.0")]
     public async Task GenerateAspNetCoreODataWebApi_With_UseProgramMainOrNot(bool useProgramMain, string framework)
@@ -466,10 +462,8 @@ public class WebApiTemplateTests : IClassFixture<ProjectFactoryFixture>
     }
 
     [Theory]
-    [InlineData(true, "net6.0", false)]
     [InlineData(true, "net8.0", false)]
     [InlineData(true, "net9.0", true)]
-    [InlineData(false, "net6.0", false)]
     [InlineData(false, "net8.0", false)]
     [InlineData(false, "net9.0", true)]
     public async Task GenerateAspNetCoreODataWebApi_With_UseProgramMainOrNot_VerifySwaggerOrOpenApi(bool useProgramMain, string framework, bool openApiJsonExists)
