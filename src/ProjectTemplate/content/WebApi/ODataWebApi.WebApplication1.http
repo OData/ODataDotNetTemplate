@@ -12,11 +12,12 @@
 ### Get metadata
 GET {{HostAddress}}/odata/$metadata
 
-### Swagger/OpenAPI
 //#if (EnableOpenAPI)
-//#if (IsNet6Or8)
+### Swagger
 GET {{HostAddress}}/swagger/v1/swagger.json
-//#else
+
+//#if (!IsNet6Or8)
+### OpenAPI
 GET {{HostAddress}}/openapi/v1.json
 //#endif
 //#endif

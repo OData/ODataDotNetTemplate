@@ -10,7 +10,7 @@
 		<PackageReference Include="Microsoft.AspNetCore.OData" Version="9.1.3" Condition=" '$(Framework)' == 'net8.0' " />
 		<PackageReference Include="Microsoft.AspNetCore.OData" Version="9.1.3" Condition=" '$(Framework)' == 'net9.0' " />
 		<!--#if (EnableOpenAPI)-->
-		<PackageReference Include="Swashbuckle.AspNetCore" Version="7.3.1" Condition=" '$(EnableOpenAPI)' == 'True' AND '$(Framework)' != 'net9.0' " />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="7.3.1" Condition=" '$(EnableOpenAPI)' == 'True' " />
 		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.1" Condition=" '$(EnableOpenAPI)' == 'True' AND '$(Framework)' == 'net9.0' " />
 		<!--#endif-->
 	</ItemGroup>
