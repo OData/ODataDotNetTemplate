@@ -16,7 +16,7 @@ internal static class TemplatePackageInstaller
 {
     private static bool _haveReinstalledTemplatePackages;
 
-    private static readonly string _templatePackage = "Microsoft.AspNetCoreOData.WebApiTemplate";
+    private static readonly string _templatePackage = "Microsoft.OData.WebApiTemplate";
 
     /// <summary>
     /// Gets the custom template hive path from the assembly metadata.
@@ -79,7 +79,7 @@ internal static class TemplatePackageInstaller
                 .Single(a => a.Key == "ArtifactsShippingPackagesDir").Value;
         Assert.NotNull(packagesDir);
 
-        var builtPackages = Directory.EnumerateFiles(packagesDir, "Microsoft.AspNetCoreOData.WebApiTemplate*.nupkg")
+        var builtPackages = Directory.EnumerateFiles(packagesDir, "Microsoft.OData.WebApiTemplate*.nupkg")
             .Where(p => Path.GetFileName(p).StartsWith(_templatePackage, StringComparison.OrdinalIgnoreCase))
             .ToArray();
 

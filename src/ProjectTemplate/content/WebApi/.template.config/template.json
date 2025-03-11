@@ -12,7 +12,7 @@
   "name": "OData ASP.NET Core Web Api Template",
   "generatorVersions": "[1.0.0.0-*)",
   "description": "A project template for creating a RESTful Web API using AspNetCore OData controllers, with optional support for OpenAPI and other OData settings like System Query Options and OData Batching.",
-  "identity": "Microsoft.AspNetCoreOData.WebApiTemplate",
+  "identity": "Microsoft.OData.WebApiTemplate",
   "shortName": "odata-webapi",
   "tags": {
     "language": "C#",
