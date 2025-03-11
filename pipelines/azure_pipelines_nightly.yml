@@ -171,13 +171,13 @@ extends:
               ]
             VerboseLogin: true
         - task: DotNetCoreCLI@2
-          displayName: Dotnet - Pack Microsoft.AspNetCoreOData.WebApiTemplate Nightly - IsNightlyBuild=true
+          displayName: Dotnet - Pack Microsoft.OData.WebApiTemplate Nightly - IsNightlyBuild=true
           inputs:
             command: custom
             custom: 'pack'
             arguments: '$(Build.SourcesDirectory)\src\ProjectTemplate\ODataWebApiTemplate.csproj -c $(BuildConfiguration) -o $(Build.ArtifactStagingDirectory)\Nuget -v Detailed -p:IsNightlyBuild=true -p:IncludeSymbols=true'
         - task: DotNetCoreCLI@2
-          displayName: Dotnet - Pack Microsoft.AspNetCoreOData.WebApiTemplate Release
+          displayName: Dotnet - Pack Microsoft.OData.WebApiTemplate Release
           inputs:
             command: custom
             custom: 'pack'

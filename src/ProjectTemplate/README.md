@@ -16,13 +16,13 @@ Follow these steps to use the template locally:
 Install the template using the dotnet new command:
 
 ```bash
-dotnet new install Microsoft.AspNetCoreOData.WebApiTemplate
+dotnet new install Microsoft.OData.WebApiTemplate
 ```
 
 To specify the PackageVersion explicitly:
 
 ```bash
-dotnet new install Microsoft.AspNetCoreOData.WebApiTemplate::<PackageVersion>
+dotnet new install Microsoft.OData.WebApiTemplate::<PackageVersion>
 ```
 
 ### 2. Create a New Project Using the Template
@@ -134,7 +134,7 @@ dotnet run
 Uninstall the template using the dotnet new command:
 
 ```bash
-dotnet new uninstall Microsoft.AspNetCoreOData.WebApiTemplate
+dotnet new uninstall Microsoft.OData.WebApiTemplate
 ```
 
 ## Project Structure
