@@ -174,7 +174,7 @@ extends:
           displayName: NuGet - Pack Microsoft.OData.WebApiTemplate Nightly
           inputs:
             command: custom
-            arguments: pack $(Build.SourcesDirectory)\src\ProjectTemplate\ODataWebApiTemplate.csproj -NonInteractive -OutputDirectory $(Build.ArtifactStagingDirectory)\Nuget -Properties Configuration=$(BuildConfiguration);IncludeSymbols=True -Verbosity Detailed -Symbols  -SymbolPackageFormat snupkg
+            arguments: pack $(Build.SourcesDirectory)\src\ProjectTemplate\ODataWebApiTemplate.csproj -NonInteractive -OutputDirectory $(Build.ArtifactStagingDirectory)\Nuget -Properties Configuration=$(BuildConfiguration);IsNightlyBuild=True -Verbosity Detailed -Symbols  -SymbolPackageFormat snupkg
         - task: NuGetCommand@2
           displayName: NuGet - Pack Microsoft.OData.WebApiTemplate Release
           inputs:
