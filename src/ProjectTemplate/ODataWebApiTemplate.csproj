@@ -22,7 +22,7 @@ To install the templates in this package, run 'dotnet new --install $(PackageId)
     <NoDefaultExcludes>True</NoDefaultExcludes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <IncludeContentInPack>True</IncludeContentInPack>
-    <Copyright>$(AssemblyCopyright)</Copyright>
+    <Copyright>&#169; .NET Foundation and Contributors. All rights reserved.</Copyright>
     
     <!-- Everything is delay signed by default -->
     <DelaySign>true</DelaySign>
