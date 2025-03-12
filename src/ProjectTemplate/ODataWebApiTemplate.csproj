@@ -3,7 +3,7 @@
     <PackageId>Microsoft.OData.WebApiTemplate</PackageId>
     <PackageVersion>$(PackageVersion)</PackageVersion>
     <Title>OData ASP.NET Core Web API Template</Title>
-    <Authors>Microsoft</Authors>
+    <Authors>OData (.NET Foundation)</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Description>OData ASP.NET Core Web Template Pack for Microsoft Template Engine
 
