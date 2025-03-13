@@ -3,8 +3,9 @@
     <PackageId>Microsoft.OData.WebApiTemplate</PackageId>
     <PackageVersion>$(PackageVersion)</PackageVersion>
     <Title>OData ASP.NET Core Web API Template</Title>
-    <Authors>OData (.NET Foundation)</Authors>
+    <Authors>Microsoft</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Description>OData ASP.NET Core Web Template Pack for Microsoft Template Engine
 
 To install the templates in this package, run 'dotnet new --install $(PackageId)::$(PackageVersion)'.</Description>
@@ -22,11 +23,7 @@ To install the templates in this package, run 'dotnet new --install $(PackageId)
     <NoDefaultExcludes>True</NoDefaultExcludes>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <IncludeContentInPack>True</IncludeContentInPack>
-    <Copyright>&#169; .NET Foundation and Contributors. All rights reserved.</Copyright>
-    
-    <!-- Everything is delay signed by default -->
-    <DelaySign>true</DelaySign>
-    <SignAssembly>true</SignAssembly>
+    <Copyright>© Microsoft Corporation. All rights reserved.</Copyright>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -39,8 +36,9 @@ To install the templates in this package, run 'dotnet new --install $(PackageId)
   </PropertyGroup>
 
   <PropertyGroup>
-    <DelaySign>True</DelaySign>
-    <SignAssembly>True</SignAssembly>
+    <!-- Everything is delay signed by default -->
+    <DelaySign>true</DelaySign>
+    <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>$(ToolsPath)35MSSharedLib1024.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
