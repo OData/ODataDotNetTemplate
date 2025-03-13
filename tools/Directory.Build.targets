@@ -32,7 +32,7 @@
   <!-- For NuGet Packages -->
   <PropertyGroup>
     <VersionNuGetSemantic>$(VersionFullSemantic)</VersionNuGetSemantic>
-    <VersionNuGetSemantic Condition="'$(VersionRelease)'!=''">$(VersionFull)</VersionNuGetSemantic>
+    <VersionNuGetSemantic Condition="'$(VersionRelease)'!=''">$(VersionFullSemantic)-$(VersionRelease).$(VersionReleaseNumber)</VersionNuGetSemantic>
     <NightlyBuildVersion>$([System.DateTime]::Now.ToString("yyyyMMddHHmm"))</NightlyBuildVersion>
     <VersionNugetNightlyBuild>$(VersionFullSemantic)-Nightly$(NightlyBuildVersion)</VersionNugetNightlyBuild>
 
