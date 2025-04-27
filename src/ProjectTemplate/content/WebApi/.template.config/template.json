@@ -9,9 +9,9 @@
     "Service",
     "Web API"
   ],
-  "name": "OData ASP.NET Core Web Api Template",
+  "name": "ASP.NET OData Core Web API",
   "generatorVersions": "[1.0.0.0-*)",
-  "description": "A project template for creating a RESTful Web API using AspNetCore OData controllers, with optional support for OpenAPI and other OData settings like System Query Options and OData Batching.",
+  "description": "A project template for creating a RESTful Web API using AspNetCore OData controllers, with optional support for OpenAPI and other OData settings like query options and OData batching.",
   "identity": "Microsoft.OData.WebApiTemplate",
   "shortName": "odata-webapi",
   "tags": {
@@ -42,7 +42,7 @@
     "ODataQueryOptions": {
       "type": "parameter",
       "datatype": "choice",
-      "description": "OData System Query Options.",
+      "description": "OData query options",
       "allowMultipleValues": true,
       "enableQuotelessLiterals": true,
       "choices": [
@@ -101,7 +101,7 @@
     "EnableNoDollarQueryOptions": {
       "type": "parameter",
       "datatype": "bool",
-      "description": "Whether or not the OData system query options should be prefixed with '$'",
+      "description": "Whether or not the OData query options should be prefixed with '$'",
       "defaultValue": "true"
     },
     "EnableCaseInsensitive": {

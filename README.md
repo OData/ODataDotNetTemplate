@@ -1,4 +1,4 @@
-# ASP.NET Core OData WebAPI Template
+# ASP.NET Core OData Web API Template
 
 ---
 
@@ -7,7 +7,7 @@ Component | Build  | Status
 ASP.NET Core ODataDotNetTemplate|Rolling | [![Build Status](https://msazure.visualstudio.com/One/_apis/build/status/407212?repoName=OData/ODataDotNetTemplate&branchName=main)](https://msazure.visualstudio.com/One/_build/latest/407212?repoName=OData/ODataDotNetTemplate&branchName=main)
 ASP.NET Core ODataDotNetTemplate|Nightly | [![Build Status](https://msazure.visualstudio.com/One/_apis/build/status/407217?repoName=OData/ODataDotNetTemplate&branchName=main)](https://msazure.visualstudio.com/One/_build/latest/407217?repoName=OData/ODataDotNetTemplate&branchName=main)
 
-This repository provides a .NET template for creating an ASP.NET Core WebAPI project with OData support. It supports configurations for .NET 6.0, 8.0 and above, with appropriate setups for each version.
+This repository provides a .NET template for creating an ASP.NET Core Web API project with OData support. It supports configurations for .NET 8.0 and above, with appropriate setups for each version.
 
 ## Prerequisites
 
