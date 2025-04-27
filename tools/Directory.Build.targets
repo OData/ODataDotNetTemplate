@@ -5,7 +5,7 @@
     <VersionMinor Condition="'$(VersionMinor)' == ''">0</VersionMinor>
     <VersionBuild Condition="'$(VersionBuild)' == ''">0</VersionBuild>
     <VersionRelease Condition="'$(VersionRelease)' == ''">preview</VersionRelease>
-    <VersionReleaseNumber Condition="'$(VersionReleaseNumber)' == ''">1</VersionReleaseNumber>
+    <VersionReleaseNumber Condition="'$(VersionReleaseNumber)' == ''">2</VersionReleaseNumber>
   </PropertyGroup>
 
   <!-- For NuGet Package Dependencies -->

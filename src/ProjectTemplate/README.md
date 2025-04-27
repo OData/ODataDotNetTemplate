@@ -1,5 +1,5 @@
-# OData ASP.NET Core WebAPI Template Pack
-This .NET template helps you create an ASP.NET Core WebAPI project with OData support. It supports different configurations for .NET 6.0 and above, with appropriate setup for each version.
+# ASP.NET Core OData Web API Template Pack
+This .NET template helps you create an ASP.NET Core Web API project with OData support. It supports different configurations for .NET 8.0 and above, with appropriate setup for each version.
 
 ## Prerequisites
 
@@ -55,7 +55,7 @@ Template options:
                                                               net8.0  Target net8.0
                                                               net9.0  Target net9.0
                                                             Default: net9.0
-  -qo, --query-option <count|expand|filter|orderby|select>  OData System Query Options.
+  -qo, --query-option <count|expand|filter|orderby|select>  OData query options
                                                             Type: choice
                                                               filter   Enable $filter query option
                                                               select   Enable $select query option
@@ -64,7 +64,7 @@ Template options:
                                                               count    Enable $count query option
                                                             Multiple values are allowed: True
                                                             Default: filter|select|expand|orderby|count
-  --no-dollar                                               Whether or not the OData system query options should be prefixed with '$'
+  --no-dollar                                               Whether or not the OData query options should be prefixed with '$'
                                                             Type: bool
                                                             Default: true
   -ci, --case-insensitive                                   Enable case insensitive for the controller/action/property name in conventional routing
@@ -90,34 +90,29 @@ Template options:
                                                             Default: false
 ```
 
-#### Create Template with Default Settings
-
+#### Create template with default settings
 ```bash
-dotnet new odata-webapi -n MyODataService.API1 --framework net9.0
+dotnet new odata-webapi -n MyODataService1
 ```
 
-#### Enable OData Batching and with all Query-Options
-
+#### Specify .NET framework
 ```bash
-dotnet new odata-webapi -n MyODataService.API2 --configurehttps true --enable-batching true
+dotnet new odata-webapi -n MyODataService2 -f net8.0
 ```
 
-#### Enable a few Query-Options
-
+#### Enable OData batching
 ```bash
-dotnet new odata-webapi -n MyODataService.API4 --query-option filter select expand
+dotnet new odata-webapi -n MyODataService3 --enable-batching true
+```
+
+#### Enable query options
+```bash
+dotnet new odata-webapi -n MyODataService4 --query-option filter select expand
 ```
 
 #### Enable OpenAPI/Swagger
-
 ```bash
-dotnet new odata-webapi -n MyODataService.API5 --enable-openapi true
-
-# or
-dotnet new odata-webapi -n MyODataService.API6 -f net9.0 --enable-openapi true
-
-# or
-dotnet new odata-webapi -n MyODataService.API7 -f net9.0 --enable-openapi true
+dotnet new odata-webapi -n MyODataService5 --enable-openapi true
 ```
 
 ### 3. Run the Project

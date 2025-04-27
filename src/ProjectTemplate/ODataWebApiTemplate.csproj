@@ -2,14 +2,14 @@
   <PropertyGroup>
     <PackageId>Microsoft.OData.WebApiTemplate</PackageId>
     <PackageVersion>$(PackageVersion)</PackageVersion>
-    <Title>OData ASP.NET Core Web API Template</Title>
+    <Title>ASP.NET Core OData Web API</Title>
     <Authors>Microsoft</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <Description>OData ASP.NET Core Web Template Pack for Microsoft Template Engine
+    <Description>ASP.NET Core OData Web API Template Pack for Microsoft Template Engine
 
 To install the templates in this package, run 'dotnet new --install $(PackageId)::$(PackageVersion)'.</Description>
-    <PackageTags>aspnet;templates;web;webapi;api;service;odata;aspnet</PackageTags>
+    <PackageTags>aspnet;templates;web;webapi;api;service;odata;aspnetcore</PackageTags>
     <PackageProjectUrl>https://github.com/OData/ODataDotNetTemplate</PackageProjectUrl>
     <RepositoryUrl>https://github.com/OData/ODataDotNetTemplate</RepositoryUrl>
     <PackageIcon>icon.png</PackageIcon>

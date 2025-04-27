@@ -4,7 +4,7 @@
   "symbolInfo": [
     {
       "id": "ODataQueryOptions",
-      "name": { "text": "OData System Query Options." },
+      "name": { "text": "OData query options." },
       "isVisible": true
     },
     {
@@ -35,7 +35,7 @@
     },
     {
       "id": "EnableNoDollarQueryOptions",
-      "name": { "text": "Whether or not to prefix OData system query options with '$'" },
+      "name": { "text": "Whether or not to prefix OData query options with '$'" },
       "isVisible": true,
       "defaultValue": "true"
     },
