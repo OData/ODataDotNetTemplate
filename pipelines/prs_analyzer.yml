@@ -7,9 +7,8 @@ schedules:
   displayName: "Weekly PR Hygiene Report"
   branches:
     include:
-    - main # or your default branch
-  always: true
-  enabled: true
+    - main
+  always: false
 
 variables:
 - group: OData-variables-Shared
@@ -32,7 +31,7 @@ steps:
     addToPath: true
 
 - script: |
-    pip install -r requirements.txt
+    pip install requests dateutil
   displayName: 'Install Python dependencies'
 
 - script: |
