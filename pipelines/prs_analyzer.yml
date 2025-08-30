@@ -1,0 +1,76 @@
+trigger: none # This pipeline is only triggered by schedule or manually
+
+pr: none
+
+schedules:
+- cron: "0 9 * * 1" # Every Monday at 9 AM UTC
+  displayName: "Weekly PR Hygiene Report"
+  branches:
+    include:
+    - main # or your default branch
+  always: true
+  enabled: true
+
+variables:
+- group: OData-variables-Shared
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+resources:
+  repositories:
+    - repository: OData
+      type: github
+      endpoint: $(ODATA_GITHUB_CONNECTION)
+
+steps:
+- checkout: self
+
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.11'
+    addToPath: true
+
+- script: |
+    pip install -r requirements.txt
+  displayName: 'Install Python dependencies'
+
+- script: |
+     python github_pr_analyzer.py
+  displayName: 'Run GitHub PR Analyzer for "OData/odata.net" repo'
+  env:
+    SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+    GITHUB_REPO: "OData/odata.net"
+    TEAMS_WEBHOOK_URL: $(TEAMS_WEBHOOK_URL)
+
+- script: |
+     python github_pr_analyzer.py
+  displayName: 'Run GitHub PR Analyzer for "OData/ODataConnectedService" repo'
+  env:
+    SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+    GITHUB_REPO: "OData/ODataConnectedService"
+    TEAMS_WEBHOOK_URL: $(TEAMS_WEBHOOK_URL)
+
+- script: |
+     python github_pr_analyzer.py
+  displayName: 'Run GitHub PR Analyzer for "OData/AspNetCoreOData" repo'
+  env:
+    SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+    GITHUB_REPO: "OData/AspNetCoreOData"
+    TEAMS_WEBHOOK_URL: $(TEAMS_WEBHOOK_URL)
+
+- script: |
+     python github_pr_analyzer.py
+  displayName: 'Run GitHub PR Analyzer for "OData/WebApi" repo'
+  env:
+    SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+    GITHUB_REPO: "OData/WebApi"
+    TEAMS_WEBHOOK_URL: $(TEAMS_WEBHOOK_URL)
+
+- script: |
+     python github_pr_analyzer.py
+  displayName: 'Run GitHub PR Analyzer for "OData/ModelBuilder" repo'
+  env:
+    SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+    GITHUB_REPO: "OData/ModelBuilder"
+    TEAMS_WEBHOOK_URL: $(TEAMS_WEBHOOK_URL)

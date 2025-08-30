@@ -365,3 +365,10 @@ FodyWeavers.xsd
 # This will be auto-generated when building the project
 .SharedData
 /.packages
+
+# Python virtual environment
+.venv/
+venv/
+env/
+ENV/
+__pycache__/
