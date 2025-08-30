@@ -36,7 +36,7 @@ steps:
   displayName: 'Install Python dependencies'
 
 - script: |
-     python github_pr_analyzer.py
+     python scripts/github_pr_analyzer.py
   displayName: 'Run GitHub PR Analyzer for "OData/odata.net" repo'
   env:
     SYSTEM_ACCESSTOKEN: $(System.AccessToken)
@@ -44,7 +44,7 @@ steps:
     TEAMS_WEBHOOK_URL: $(TEAMS_WEBHOOK_URL)
 
 - script: |
-     python github_pr_analyzer.py
+     python scripts/github_pr_analyzer.py
   displayName: 'Run GitHub PR Analyzer for "OData/ODataConnectedService" repo'
   env:
     SYSTEM_ACCESSTOKEN: $(System.AccessToken)
@@ -52,7 +52,7 @@ steps:
     TEAMS_WEBHOOK_URL: $(TEAMS_WEBHOOK_URL)
 
 - script: |
-     python github_pr_analyzer.py
+     python scripts/github_pr_analyzer.py
   displayName: 'Run GitHub PR Analyzer for "OData/AspNetCoreOData" repo'
   env:
     SYSTEM_ACCESSTOKEN: $(System.AccessToken)
@@ -60,7 +60,7 @@ steps:
     TEAMS_WEBHOOK_URL: $(TEAMS_WEBHOOK_URL)
 
 - script: |
-     python github_pr_analyzer.py
+     python scripts/github_pr_analyzer.py
   displayName: 'Run GitHub PR Analyzer for "OData/WebApi" repo'
   env:
     SYSTEM_ACCESSTOKEN: $(System.AccessToken)
@@ -68,7 +68,7 @@ steps:
     TEAMS_WEBHOOK_URL: $(TEAMS_WEBHOOK_URL)
 
 - script: |
-     python github_pr_analyzer.py
+     python scripts/github_pr_analyzer.py
   displayName: 'Run GitHub PR Analyzer for "OData/ModelBuilder" repo'
   env:
     SYSTEM_ACCESSTOKEN: $(System.AccessToken)
