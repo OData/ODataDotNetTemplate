@@ -32,7 +32,7 @@ steps:
     addToPath: true
 
 - script: |
-    pip install requests dateutil
+    pip install requests python-dateutil
   displayName: 'Install Python dependencies'
 
 - script: |
