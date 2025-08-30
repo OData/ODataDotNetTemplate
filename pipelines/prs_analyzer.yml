@@ -2,11 +2,6 @@ trigger: none # This pipeline is only triggered by schedule or manually
 
 pr: none
 
-parameters:
-  - name: GITHUB_CONNECTION
-    type: string
-    default: 'OData GitHub'
-
 schedules:
 - cron: "0 9 * * 1" # Every Monday at 9 AM UTC
   displayName: "Weekly PR Hygiene Report"
@@ -26,7 +21,7 @@ resources:
     - repository: ODataDotNetTemplate
       type: github
       name: OData/ODataDotNetTemplate
-      endpoint: ${{ parameters.GITHUB_CONNECTION }}
+      endpoint: 'OData GitHub'
 
 steps:
 - checkout: self
