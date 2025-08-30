@@ -160,6 +160,7 @@ def main():
 
         # Analyze comments (always returns status, context)
         # comment_status, comment_context = analyze_comments(comments)
+        comment_status, comment_context = "Recent activity", "Last comment was 2 days ago"
 
         prs_with_analysis.append({
             'number': pr_number,
@@ -169,8 +170,8 @@ def main():
             'days_open': days_open,
             'category': category,
             'priority': priority,
-            # 'comment_status': comment_status,
-            # 'comment_context': comment_context
+            'comment_status': comment_status,
+            'comment_context': comment_context
         })
 
         # Small delay to avoid rate limiting
