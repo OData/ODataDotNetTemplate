@@ -10,8 +10,8 @@ schedules:
     - main
   always: false
 
-variables:
-- group: OData-variables-Shared
+# variables:
+# - group: OData-variables-Shared
 
 pool:
   vmImage: 'ubuntu-latest'
