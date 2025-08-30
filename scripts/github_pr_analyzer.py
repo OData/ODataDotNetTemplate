@@ -153,13 +153,13 @@ def main():
         pr_number = pr['number']
 
         # Get the last few comments and details
-        comments = get_pr_comments(pr_number)
+        # comments = get_pr_comments(pr_number)
 
         # Categorize by age
         category, days_open, priority = categorize_pr(pr)
 
         # Analyze comments (always returns status, context)
-        comment_status, comment_context = analyze_comments(comments)
+        # comment_status, comment_context = analyze_comments(comments)
 
         prs_with_analysis.append({
             'number': pr_number,
@@ -169,8 +169,8 @@ def main():
             'days_open': days_open,
             'category': category,
             'priority': priority,
-            'comment_status': comment_status,
-            'comment_context': comment_context
+            # 'comment_status': comment_status,
+            # 'comment_context': comment_context
         })
 
         # Small delay to avoid rate limiting
