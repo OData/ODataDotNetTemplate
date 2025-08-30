@@ -30,7 +30,7 @@ def get_github_prs():
 
 def get_pr_comments(pr_number):
     """Fetches the comments for a specific PR."""
-    url = f"{GITHUB_API_URL}/repos/{GITHUB_REPO}/issues/{pr_number}/comments?sort=created&direction=desc&per_page=3"
+    url = f"{GITHUB_API_URL}/repos/{GITHUB_REPO}/pulls/{pr_number}/comments?sort=created&direction=desc&per_page=3"
     return make_github_request(url)
 
 
@@ -172,8 +172,6 @@ def main():
             'comment_status': comment_status,
             'comment_context': comment_context
         })
-
-        print(f"Analyzing PR #{pr_number}")
 
         # Small delay to avoid rate limiting
         import time
