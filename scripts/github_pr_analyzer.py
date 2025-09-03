@@ -5,6 +5,9 @@ from dateutil import parser
 
 # Configuration
 SYSTEM_ACCESS_TOKEN = os.getenv('SYSTEM_ACCESSTOKEN')
+if SYSTEM_ACCESS_TOKEN is None:
+    print("No SYSTEM_ACCESSTOKEN found")
+
 GITHUB_REPO = os.getenv('GITHUB_REPO')
 TEAMS_WEBHOOK_URL = os.getenv('TEAMS_WEBHOOK_URL')
 GITHUB_API_URL = "https://api.github.com"
