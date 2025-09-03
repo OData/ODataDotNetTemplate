@@ -149,6 +149,8 @@ def main():
         print("No open PRs found. Hooray!")
         return
 
+    pr_list = [pr for pr in pr_list if pr['draft'] == False or pr['draft'] == 'false']
+
     print(f"Found {len(pr_list)} open PRs. Performing analysis...")
     prs_with_analysis = []
 
