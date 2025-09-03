@@ -10,9 +10,6 @@ schedules:
     - main
   always: false
 
-# variables:
-# - group: OData-variables-Shared
-
 pool:
   vmImage: 'ubuntu-latest'
 
@@ -74,3 +71,4 @@ steps:
     SYSTEM_ACCESSTOKEN: $(System.AccessToken)
     GITHUB_REPO: "OData/ModelBuilder"
     TEAMS_WEBHOOK_URL: $(TEAMS_WEBHOOK_URL)
+    

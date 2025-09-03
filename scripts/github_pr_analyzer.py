@@ -79,15 +79,20 @@ def categorize_pr(pr_data):
     created_at = parser.parse(pr_data['created_at']).astimezone(timezone.utc)
     now = datetime.now(timezone.utc)
     days_open = (now - created_at).days
-
-    if days_open >= 30:
-        return "🟥 > 1 Month", days_open, "high"
-    elif days_open >= 21:
-        return "🟧 3 Weeks", days_open, "medium"
+    if days_open >= 365:
+        return "🟥 > 1 Year", days_open, "critical"
+    elif days_open >= 183:
+        return "🟥 > 6 Months", days_open, "critical"
+    elif days_open >= 90:
+        return "🟥 > 3 Months", days_open, "high"
+    elif days_open >= 60:
+        return "🟥 > 2 Months", days_open, "high"
+    elif days_open >= 30:
+        return "🟧 > 1 Month", days_open, "high"
     elif days_open >= 14:
-        return "🟨 2 Weeks", days_open, "medium"
+        return "🟨 > 2 Weeks", days_open, "medium"
     elif days_open >= 7:
-        return "🟩 1 Week", days_open, "low"
+        return "🟩 > 1 Week", days_open, "low"
     else:
         return "🟦 < 1 Week", days_open, "low"
 
@@ -98,9 +103,6 @@ def create_teams_message(prs_with_analysis):
 
     for pr in prs_with_analysis:
         pr_info = f"[{pr['title']}]({pr['html_url']}) by _{pr['author']}_ (**{pr['days_open']} days open** days old)"
-
-        pr_info += f"<br>"
-        pr_info += f"**{pr['comment_status']}**: {pr['comment_context']}"
 
         facts.append({
             "name": f"{pr['category']} | #{pr['number']}",
@@ -163,10 +165,6 @@ def main():
         # Categorize by age
         category, days_open, priority = categorize_pr(pr)
 
-        # Analyze comments (always returns status, context)
-        # comment_status, comment_context = analyze_comments(comments)
-        comment_status, comment_context = "Recent activity", "Last comment was 2 days ago"
-
         prs_with_analysis.append({
             'number': pr_number,
             'title': pr['title'],
@@ -175,8 +173,6 @@ def main():
             'days_open': days_open,
             'category': category,
             'priority': priority,
-            'comment_status': comment_status,
-            'comment_context': comment_context
         })
 
         # Small delay to avoid rate limiting
