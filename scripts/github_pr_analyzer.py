@@ -100,7 +100,6 @@ def categorize_pr(pr_data):
 def create_teams_message(prs_with_analysis):
     """Creates a Microsoft Teams MessageCard payload with grouped PRs by age buckets."""
     from collections import defaultdict
-
     if not prs_with_analysis:
         return {
             "@type": "MessageCard",
@@ -128,15 +127,39 @@ def create_teams_message(prs_with_analysis):
         "🟦 < 1 Week",
     ]
 
-    lines = [f"Found {len(prs_with_analysis)} open PRs in **{GITHUB_REPO}**", ""]
+    # Summary stats
+    total_prs = len(prs_with_analysis)
+    oldest = max(prs_with_analysis, key=lambda p: p['days_open'])['days_open'] if prs_with_analysis else 0
+    avg_age = round(sum(p['days_open'] for p in prs_with_analysis) / total_prs, 1) if total_prs else 0
+
+    lines = [f"**Analysis of {total_prs} open PRs in _{GITHUB_REPO}_**",
+             f"- Oldest PR: {oldest} days\n- Average age: {avg_age} days\n"]
 
     for cat in category_order:
         if cat not in groups:
             continue
         prs = sorted(groups[cat], key=lambda p: p['days_open'], reverse=True)
-        lines.append(cat)
+        count = len(prs)
+        # Emoji header, bold for critical
+        header = f"**{cat}** ({count} PR{'s' if count > 1 else ''})"
+        if cat.startswith("🟥"):
+            header = f"🔴 {header}"
+        elif cat.startswith("🟧"):
+            header = f"🟠 {header}"
+        elif cat.startswith("🟨"):
+            header = f"🟡 {header}"
+        elif cat.startswith("🟩"):
+            header = f"🟢 {header}"
+        elif cat.startswith("🟦"):
+            header = f"🔵 {header}"
+        lines.append(header)
         for pr in prs:
-            lines.append(f"- #{pr['number']} [{pr['title']}]({pr['html_url']}) by _{pr['author']}_ ({pr['days_open']} days old)" )
+            author_url = f"https://github.com/{pr['author']}"
+            pr_line = f"- [#{pr['number']}]({pr['html_url']}) [{pr['title']}] by [_{pr['author']}_]({author_url}) ({pr['days_open']} days old)"
+            # Optionally show last comment info if available
+            if 'last_comment' in pr and pr['last_comment']:
+                pr_line += f"\n    > _Last:_ {pr['last_comment']}"
+            lines.append(pr_line)
         lines.append("")  # blank line between groups
 
     # Join lines into markdown text
@@ -146,9 +169,9 @@ def create_teams_message(prs_with_analysis):
     card_payload = {
         "@type": "MessageCard",
         "@context": "http://schema.org/extensions",
-        "summary": "Open OData PRs",
+        "summary": "Open Pull Requests",
         "themeColor": "0078D7",
-        "title": "Open OData PRs",
+        "title": "Open Pull Requests",
         "text": text_block,
         "potentialAction": [
             {
