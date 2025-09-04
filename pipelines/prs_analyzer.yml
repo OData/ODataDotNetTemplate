@@ -39,6 +39,7 @@ steps:
     SYSTEM_ACCESSTOKEN: $(System.AccessToken)
     GITHUB_REPO: "OData/odata.net"
     TEAMS_WEBHOOK_URL: $(TEAMS_WEBHOOK_URL)
+    GROUP_NAME: $(GROUP_NAME)
 
 - script: |
      python scripts/github_pr_analyzer.py
@@ -47,6 +48,7 @@ steps:
     SYSTEM_ACCESSTOKEN: $(System.AccessToken)
     GITHUB_REPO: "OData/ODataConnectedService"
     TEAMS_WEBHOOK_URL: $(TEAMS_WEBHOOK_URL)
+    GROUP_NAME: $(GROUP_NAME)
 
 - script: |
      python scripts/github_pr_analyzer.py
@@ -55,6 +57,7 @@ steps:
     SYSTEM_ACCESSTOKEN: $(System.AccessToken)
     GITHUB_REPO: "OData/AspNetCoreOData"
     TEAMS_WEBHOOK_URL: $(TEAMS_WEBHOOK_URL)
+    GROUP_NAME: $(GROUP_NAME)
 
 - script: |
      python scripts/github_pr_analyzer.py
@@ -63,6 +66,7 @@ steps:
     SYSTEM_ACCESSTOKEN: $(System.AccessToken)
     GITHUB_REPO: "OData/WebApi"
     TEAMS_WEBHOOK_URL: $(TEAMS_WEBHOOK_URL)
+    GROUP_NAME: $(GROUP_NAME)
 
 - script: |
      python scripts/github_pr_analyzer.py
@@ -71,4 +75,4 @@ steps:
     SYSTEM_ACCESSTOKEN: $(System.AccessToken)
     GITHUB_REPO: "OData/ModelBuilder"
     TEAMS_WEBHOOK_URL: $(TEAMS_WEBHOOK_URL)
-    
+    GROUP_NAME: $(GROUP_NAME)

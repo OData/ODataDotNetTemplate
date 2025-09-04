@@ -10,6 +10,7 @@ if SYSTEM_ACCESS_TOKEN is None:
 
 GITHUB_REPO = os.getenv('GITHUB_REPO')
 TEAMS_WEBHOOK_URL = os.getenv('TEAMS_WEBHOOK_URL')
+GROUP_NAME = os.getenv('GROUP_NAME')
 GITHUB_API_URL = "https://api.github.com"
 
 
@@ -35,38 +36,6 @@ def get_pr_comments(pr_number):
     """Fetches the comments for a specific PR."""
     url = f"{GITHUB_API_URL}/repos/{GITHUB_REPO}/pulls/{pr_number}/comments?sort=created&direction=desc&per_page=3"
     return make_github_request(url)
-
-
-def analyze_comments(comments):
-    """Analyzes the last few comments to determine PR status.
-
-    Always returns a tuple: (status, context)
-    """
-    if not comments:
-        return ("No comments", "No one has reviewed this PR.")
-
-    last_comment = comments[0]
-    author = last_comment.get('user', {}).get('login', 'unknown')
-    created_at = last_comment.get('created_at')
-    try:
-        comment_date = parser.parse(created_at).astimezone(timezone.utc)
-    except Exception:
-        comment_date = datetime.now(timezone.utc)
-
-    now = datetime.now(timezone.utc)
-    hours_since_comment = (now - comment_date).total_seconds() / 3600
-    body = last_comment.get('body') or ''
-    preview = (body[:100] + '...') if len(body) > 100 else body
-
-    if hours_since_comment < 48:
-        status = "Recent activity"
-        context = f"Last comment by _{author}_ ~{int(hours_since_comment)} hours ago:_ \"{preview}\""
-    else:
-        status = "Stalled"
-        context = f"Waiting for author response? Last comment by _{author}_ ~{int(hours_since_comment//24)} days ago:_ \"{preview}\""
-
-    return status, context
-
 
 def get_pr_details(pr_number):
     """Gets detailed PR information including body."""
@@ -153,6 +122,8 @@ def create_teams_message(prs_with_analysis):
         elif cat.startswith("🟦"):
             header = f"🔵 {header}"
         lines.append(header)
+        lines.append(f"@{GROUP_NAME}")
+        
         for pr in prs:
             author_url = f"https://github.com/{pr['author']}"
             pr_line = f"- [#{pr['number']}]({pr['html_url']}) [{pr['title']}] by [_{pr['author']}_]({author_url}) ({pr['days_open']} days old)"
@@ -164,7 +135,7 @@ def create_teams_message(prs_with_analysis):
 
     # Join lines into markdown text
     text_block = "\n".join(line for line in lines if line is not None)
-    text_block += "\n"
+    text_block += "\n\n"
 
     card_payload = {
         "@type": "MessageCard",
