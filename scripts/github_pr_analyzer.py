@@ -98,25 +98,65 @@ def categorize_pr(pr_data):
 
 
 def create_teams_message(prs_with_analysis):
-    """Creates a rich Microsoft Teams MessageCard payload summarizing PRs."""
-    facts = []
+    """Creates a Microsoft Teams MessageCard payload with grouped PRs by age buckets."""
+    from collections import defaultdict
 
+    if not prs_with_analysis:
+        return {
+            "@type": "MessageCard",
+            "@context": "http://schema.org/extensions",
+            "summary": "GitHub PR Report",
+            "themeColor": "0078D7",
+            "title": "GitHub PR Report",
+            "text": f"No open PRs in **{GITHUB_REPO}**",
+        }
+
+    # Group PRs by category
+    groups = defaultdict(list)
     for pr in prs_with_analysis:
-        pr_info = f"[{pr['title']}]({pr['html_url']}) by _{pr['author']}_ (**{pr['days_open']} days open** days old)"
+        groups[pr['category']].append(pr)
 
-        facts.append({
-            "name": f"{pr['category']} | #{pr['number']}",
-            "value": pr_info
-        })
+    # Desired ordering of categories (descending age / severity)
+    category_order = [
+        "🟥 > 1 Year",
+        "🟥 > 6 Months",
+        "🟥 > 3 Months",
+        "🟥 > 2 Months",
+        "🟧 > 1 Month",
+        "🟨 > 2 Weeks",
+        "🟩 > 1 Week",
+        "🟦 < 1 Week",
+    ]
+
+    priority_labels = {
+        "critical": "Critical",
+        "high": "High",
+        "medium": "Medium",
+        "low": "Low",
+    }
+
+    lines = [f"Analysis of {len(prs_with_analysis)} open PRs in **{GITHUB_REPO}**", ""]
+
+    for cat in category_order:
+        if cat not in groups:
+            continue
+        prs = sorted(groups[cat], key=lambda p: p['days_open'], reverse=True)
+        priority = priority_labels.get(prs[0]['priority'], prs[0]['priority'].title())
+        lines.append(f"{priority} | PRs opened {cat}")
+        for pr in prs:
+            lines.append(f"- [{pr['title']}]({pr['html_url']}) by _{pr['author']}_ ({pr['days_open']} days old)" )
+        lines.append("")  # blank line between groups
+
+    # Join lines into markdown text
+    text_block = "\n".join(line for line in lines if line is not None)
 
     card_payload = {
         "@type": "MessageCard",
         "@context": "http://schema.org/extensions",
-        "summary": f"GitHub PR Report",
+        "summary": "GitHub PR Report",
         "themeColor": "0078D7",
-        "title": f"GitHub PR Report",
-        "text": f"Analysis of {len(prs_with_analysis)} open PRs in **{GITHUB_REPO}**",
-        "sections": [{"facts": facts}],
+        "title": "GitHub PR Report",
+        "text": text_block,
         "potentialAction": [
             {
                 "@type": "OpenUri",
