@@ -80,21 +80,21 @@ def categorize_pr(pr_data):
     now = datetime.now(timezone.utc)
     days_open = (now - created_at).days
     if days_open >= 365:
-        return "🟥 > 1 Year", days_open, "critical"
+        return "🟥 > 1 Year", days_open
     elif days_open >= 183:
-        return "🟥 > 6 Months", days_open, "critical"
+        return "🟥 > 6 Months", days_open
     elif days_open >= 90:
-        return "🟥 > 3 Months", days_open, "high"
+        return "🟥 > 3 Months", days_open
     elif days_open >= 60:
-        return "🟥 > 2 Months", days_open, "high"
+        return "🟥 > 2 Months", days_open
     elif days_open >= 30:
-        return "🟧 > 1 Month", days_open, "high"
+        return "🟧 > 1 Month", days_open
     elif days_open >= 14:
-        return "🟨 > 2 Weeks", days_open, "medium"
+        return "🟨 > 2 Weeks", days_open
     elif days_open >= 7:
-        return "🟩 > 1 Week", days_open, "low"
+        return "🟩 > 1 Week", days_open
     else:
-        return "🟦 < 1 Week", days_open, "low"
+        return "🟦 < 1 Week", days_open
 
 
 def create_teams_message(prs_with_analysis):
@@ -128,34 +128,27 @@ def create_teams_message(prs_with_analysis):
         "🟦 < 1 Week",
     ]
 
-    priority_labels = {
-        "critical": "Critical",
-        "high": "High",
-        "medium": "Medium",
-        "low": "Low",
-    }
-
-    lines = [f"Analysis of {len(prs_with_analysis)} open PRs in **{GITHUB_REPO}**", ""]
+    lines = [f"Found {len(prs_with_analysis)} open PRs in **{GITHUB_REPO}**", ""]
 
     for cat in category_order:
         if cat not in groups:
             continue
         prs = sorted(groups[cat], key=lambda p: p['days_open'], reverse=True)
-        priority = priority_labels.get(prs[0]['priority'], prs[0]['priority'].title())
-        lines.append(f"{priority} | PRs opened {cat}")
+        lines.append(cat)
         for pr in prs:
-            lines.append(f"- [{pr['title']}]({pr['html_url']}) by _{pr['author']}_ ({pr['days_open']} days old)" )
+            lines.append(f"- #{pr['number']} [{pr['title']}]({pr['html_url']}) by _{pr['author']}_ ({pr['days_open']} days old)" )
         lines.append("")  # blank line between groups
 
     # Join lines into markdown text
     text_block = "\n".join(line for line in lines if line is not None)
+    text_block += "\n"
 
     card_payload = {
         "@type": "MessageCard",
         "@context": "http://schema.org/extensions",
-        "summary": "GitHub PR Report",
+        "summary": "Open OData PRs",
         "themeColor": "0078D7",
-        "title": "GitHub PR Report",
+        "title": "Open OData PRs",
         "text": text_block,
         "potentialAction": [
             {
@@ -197,22 +190,16 @@ def main():
     prs_with_analysis = []
 
     for pr in pr_list:
-        pr_number = pr['number']
-
-        # Get the last few comments and details
-        # comments = get_pr_comments(pr_number)
-
         # Categorize by age
-        category, days_open, priority = categorize_pr(pr)
+        category, days_open = categorize_pr(pr)
 
         prs_with_analysis.append({
-            'number': pr_number,
+            'number': pr['number'],
             'title': pr['title'],
             'html_url': pr['html_url'],
             'author': pr['user']['login'],
             'days_open': days_open,
             'category': category,
-            'priority': priority,
         })
 
         # Small delay to avoid rate limiting
