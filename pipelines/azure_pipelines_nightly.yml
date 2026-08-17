@@ -65,6 +65,14 @@ extends:
             packagesToPush: $(Build.ArtifactStagingDirectory)\Nuget\*Nightly*.nupkg
             nuGetFeedType: external
             publishFeedCredentials: 'MyGet.org - AspNetCoreOData Feed'
+          - output: nuget
+            displayName: 'NuGet push - Packages to Internal Feed'
+            packageParentPath: '$(Build.ArtifactStagingDirectory)\Nuget'
+            packagesToPush: '$(PackagesToPush)'
+            nuGetFeedType: internal
+            publishVstsFeed: $(ODataPublishFeed)
+            allowPackageConflicts: true
+            publishPackageMetadata: true
         steps:
         - checkout: self
           fetchTags: true
