@@ -18,15 +18,15 @@ pipelines:
         credscan:
           lastModifiedDate: 2025-04-27
         eslint:
-          lastModifiedDate: 2025-04-27
+          lastModifiedDate: 2026-08-18
         psscriptanalyzer:
-          lastModifiedDate: 2025-04-27
+          lastModifiedDate: 2026-08-18
         armory:
-          lastModifiedDate: 2025-04-27
+          lastModifiedDate: 2026-08-18
       binary:
         credscan:
           lastModifiedDate: 2025-04-27
         binskim:
-          lastModifiedDate: 2025-04-27
+          lastModifiedDate: 2026-08-18
         spotbugs:
-          lastModifiedDate: 2025-04-27
+          lastModifiedDate: 2026-08-18
